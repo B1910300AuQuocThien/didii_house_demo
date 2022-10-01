@@ -1,0 +1,5 @@
+{% for i in house reversed %}
+{% cycle 'red' 'yellow' 'pink' 'green' as bgcolor silent %}
+<h1 style="background-color: {{bgcolor}}">{{ forloop.counter }}</h1>
+{% endfor %}
+<a href="goback/">go back</a>

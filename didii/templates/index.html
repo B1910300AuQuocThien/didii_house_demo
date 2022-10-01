@@ -1,0 +1,36 @@
+<h1>house</h1>
+<table border="1">
+    {% for x in myHouse%}
+    <td>
+        <a href="update/{{x.id}}">update</a>
+    </td>
+    <td>{{ x.firstname }}</td>
+    <td>{{ x.lastname }}</td>
+    <td>{{ x.id }}</td>
+    <td>
+        <a href="delete/{{x.id}}">delete<a>
+    </td>
+    </tr>
+    {% endfor %}
+</table>
+<p>
+    <a href="add/">add house</a>
+</p>
+<p>
+    <a href="condition/">condition</a>
+</p>
+<p>
+    <a href="variable/">variable</a>
+</p>
+<p>
+    <a href="forloop/">forloop</a>
+</p>
+<p>
+    <a href="cycle/">cycle</a>
+</p>
+<p>
+    <a href="mymaster/">mymaster</a>
+</p>
+<p>
+    <a href="include/">include</a>
+</p>

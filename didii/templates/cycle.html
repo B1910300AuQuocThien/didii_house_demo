@@ -1,0 +1,7 @@
+{% for i  in house %}
+{% cycle 'red' 'yellow' 'pink' as bgcolor silent%}
+<ul>
+    <li style="background-color:{{bgcolor}}">{{ i.firstname }}</li>
+</ul>
+{% endfor %}
+<a href="goback/">go back</a>

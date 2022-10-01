@@ -1,0 +1,11 @@
+{% extends 'mymaster.html' %}
+{% block myheading %}
+    <h1>hello</h1>
+{% endblock  %}
+{% block mymessage %}
+    <ul>
+        {% for i in house %}
+            <li>{{ i.firstname }}</li>
+        {% endfor %}
+    </ul>
+{% endblock  %}
