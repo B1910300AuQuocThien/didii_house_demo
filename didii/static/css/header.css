@@ -1,0 +1,17 @@
+.trapezium{
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 50px solid rgb(83, 178, 255);
+    z-index: 1;
+}
+.menu-icon{
+    position: relative;
+    top: -48px;
+    z-index: 2;
+}
+.menu-icon a{
+    color: black;
+}
+.head{
+    height: 55px;
+}

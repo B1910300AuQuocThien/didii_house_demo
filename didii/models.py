@@ -80,3 +80,12 @@ class interact(models.Model):
     id_interact = models.CharField(max_length=10, primary_key=True)
     love_count = models.IntegerField()
     cmt_count = models.IntegerField()
+    
+class schedule(models.Model):
+    id_schedule = models.CharField(max_length=10, primary_key=True)
+    id_landlord = models.ForeignKey(landlord, on_delete=models.CASCADE, to_field='id_landlord')
+    id_post = models.ForeignKey(post, on_delete=models.CASCADE, to_field="id_post")
+    id_cus = models.ForeignKey(account, on_delete=models.CASCADE, to_field='id')
+    appointment_date = models.DateField()
+    booking_date = models.DateField()
+    

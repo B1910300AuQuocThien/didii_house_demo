@@ -110,3 +110,7 @@ sys.setrecursionlimit(2000)
 # def myfirst(request):
 #     template = loader.get_template('myfirst.html')
 #     return HttpResponse(template.render())
+
+
+def index(request):
+    return HttpResponse(loader.get_template('index.html').render())

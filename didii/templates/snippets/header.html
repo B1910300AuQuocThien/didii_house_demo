@@ -1,0 +1,23 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/header.css'%}">
+<div class="border row head">
+    <div class="col-3">
+        <img src="{% static 'img/logo.svg' %}" width="25%">
+    </div>
+    <div class="trapezium col-6">
+        <div class="py-2 d-flex justify-content-around menu-icon">
+            <a href="#" class="h3 fa-solid fa-home"></a>
+            <a href="#" class="h3 fa-solid fa-message"></a>
+            <a href="#" class="h3 fa-solid fa-bell"></a>
+        </div>
+    </div>
+    <div class=" col-3 py-2 row mb-2">
+        <div class="form-group has-feedback col-8">
+            <input type="text" class="form-control" placeholder="Username" />
+        </div>
+        <button class="col-4 text-white bg-primary rounded border h-50">
+            tìm kiếm
+        </button>
+        </form>
+    </div>
+</div>
