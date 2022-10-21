@@ -14,8 +14,11 @@
 </head>
 <body>
     {% include './snippets/header.html' %}
-    <div class="row">
-        
+    <div class="row mx-2">
+        {% include './snippets/left_side.html' %}
+        {% include './snippets/content.html' %}
+        {% include './snippets/right_side.html' %}
+
     </div>
     {% include "./snippets/footer.html" %}
 </body>
