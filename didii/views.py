@@ -114,3 +114,6 @@ sys.setrecursionlimit(2000)
 
 def index(request):
     return HttpResponse(loader.get_template('index.html').render())
+
+def login(request):
+    return HttpResponse(loader.get_template('login.html').render())
