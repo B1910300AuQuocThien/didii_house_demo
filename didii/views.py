@@ -1,13 +1,16 @@
 from multiprocessing import context
 from re import template
+from turtle import left
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
 from django.template import loader
-from .models import House
+from .models import House, account
 from django.urls import reverse
+from django.contrib import messages
 import sys
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
-sys.setrecursionlimit(2000)
 # def index(request):
 #     # template = loader.get_template('myfirst.html')
 #     # return HttpResponse(template.render())
@@ -112,8 +115,23 @@ sys.setrecursionlimit(2000)
 #     return HttpResponse(template.render())
 
 
-def index(request):
+def renderIndex(request):
     return HttpResponse(loader.get_template('index.html').render())
 
-def login(request):
+def renderLogin(request):
     return HttpResponse(loader.get_template('login.html').render())
+
+@csrf_exempt
+def login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    # left_side = loader.get_template('snippets/left_side.html')
+    # template = loader.get_template('index.html')
+    context = {
+        'username': username,
+    }
+    # render(request, 'index.html', {'name': context})
+    return HttpResponseRedirect(reverse('index', args=[context['username']]))
+    
+def logout(request):
+    return HttpResponseRedirect(reverse('login'))

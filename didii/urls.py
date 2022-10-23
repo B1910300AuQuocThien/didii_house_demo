@@ -2,8 +2,10 @@ from unicodedata import name
 from django.urls import path
 from . import views
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('login/', views.login, name='login')
+    path('', views.renderIndex, name='index'),
+    path('renderLogin/', views.renderLogin, name='renderLogin'),
+    path('renderLogin/login/', views.login, name="login"),
+    path('#/login', views.logout, name="logout"),
     # path('add/', views.add, name='add'),
     # path('myfirst/', views.myfirst, name='myfirst'),
     # path('variable/', views.variable, name='variable'),

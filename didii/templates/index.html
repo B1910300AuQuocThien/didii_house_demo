@@ -12,13 +12,11 @@
 <body>
     {% include './snippets/header.html' %}
     <div class="row mx-2">
-        {% include './snippets/left_side.html' %}
+        {% include './snippets/left_side.html' with name=context %}
         {% include './snippets/content.html' %}
         {% include './snippets/right_side.html' %}
-
+        
     </div>
     {% include "./snippets/footer.html" %}
-    
-    
 </body>
 </html>
