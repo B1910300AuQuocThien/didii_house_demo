@@ -121,17 +121,25 @@ def renderIndex(request):
 def renderLogin(request):
     return HttpResponse(loader.get_template('login.html').render())
 
+def renderSignup(request):
+    return HttpResponse(loader.get_template("signup.html").render())
+
 @csrf_exempt
 def login(request):
     username = request.POST['username']
     password = request.POST['password']
     # left_side = loader.get_template('snippets/left_side.html')
     # template = loader.get_template('index.html')
+    if username == '' or password == '':
+        messages.error(request, "hay nhap mat khau va ten dang nhap")
     context = {
         'username': username,
     }
-    # render(request, 'index.html', {'name': context})
-    return HttpResponseRedirect(reverse('index', args=[context['username']]))
+    # return render(request, 'index.html', {'name': context})
+    return HttpResponseRedirect(reverse('index:name', args=[context['username']]))
+    # return HttpResponseRedirect(reverse('renderIndex:name'))
+    # return HttpResponseRedirect(render(request, 'index.html', {'name': context}))
     
 def logout(request):
-    return HttpResponseRedirect(reverse('login'))
+    return HttpResponseRedirect(reverse('renderLogin'))
+    # return render(request, 'login.html')
