@@ -17,5 +17,5 @@ const address_branch = document.getElementById("address_branch")
 
 add.addEventListener('click', function(){
   const branch = document.getElementById("branch")
-  console.log(add)
+  branch.appendChild(address_branch)  
 })
