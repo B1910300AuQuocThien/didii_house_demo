@@ -25,16 +25,17 @@
                 <div class="slider-tab"></div>
             </div>
             <div class="form-inner">
-                <form action="#" class="login">
+                <form action="CT_signup/" method="post" class="login">
+                    {% csrf_token %}
                     <div class="form-outline mb-2">
                         <div class="row">
                             <div class="col-8">
                                 <label class="form-label">tên</label>
-                                <input class="form-control" required>
+                                <input name="CT_name" class="form-control" required>
                             </div>
                             <div class="col-4">
                                 <label class="form-label">năm sinh</label>
-                                <input class="form-control" required>
+                                <input name="CT_age" class="form-control" required>
                             </div>
                         </div>
                     </div>
@@ -42,39 +43,38 @@
                         <div class="row">
                             <div class="col-6">
                                 <label class="form-label">số điện thoại</label>
-                                <input class="form-control" required>
+                                <input name="CT_SDT" class="form-control" required>
                             </div>
                             <div class="col-6">
                                 <label class="form-label">giới tính</label>
-                                <input class="form-control" required>
+                                <input name="CT_gender" class="form-control" required>
                             </div>
                         </div>
                     </div>
-                    <div class="form-outline mb-2">
+                    <div class="form-outline my-2">
                         <div id="branch">
-                            <div id="address_branch" class="border-top border-bottom">
-                                <div class="text-center mb-2">
-                                    <span>chi nhánh 
-                                        <span id="branch_counter">1</span>
-                                    </span>
+                            <div class="py-2 border-top border-bottom">
+                                <div id="first_branch" class="text-center mb-2" hidden>
+                                    chi nhánh 
+                                        <span class="branch_counter">1</span>
                                 </div>
                                 <div class="row">
                                     <div class="col-4">
                                         <label class="form-label">tỉnh/thành phố</label>
-                                        <input class="form-control" required>
+                                        <input name="CT_add_city" class="form-control" required>
                                     </div>
                                     <div class="col-4">
                                         <label class="form-label">quận/huyện</label>
-                                        <input class="form-control" required>
+                                        <input name="CT_add_district" class="form-control" required>
                                     </div>
                                     <div class="col-4">
                                         <label class="form-label">phường/xã/thị trấn</label>
-                                        <input class="form-control" required>
+                                        <input name="CT_add_ward" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="mb-2">
                                     <label class="form-label">số nhà đường</label>
-                                    <input class="form-control" required>
+                                    <input name="CT_add_street" class="form-control" required>
                                 </div>
                             </div>
                         </div>
@@ -84,13 +84,14 @@
                     </div>
                     <div class="form-outline mb-2">
                         <label class="form-label">email</label>
-                        <input class="form-control" required>
+                        <input name="CT_email" class="form-control" required>
                     </div>
                     <div class="text-center">
                         <input type="submit" class="btn btn-primary btn-block mb-4" value="đăng kí"></input>
                     </div>
                 </form>
                 <form action="#" class="signup">
+                    {% csrf_token %}
                     <div class="form-outline mb-2">
                         <div class="row">
                             <div class="col-8">
