@@ -16,7 +16,7 @@ const add = document.getElementById("add_branch")
 
 function get_amount_branch(){
   const el = document.getElementsByClassName('branch_counter')
-  console.log(el)
+  // console.log(el)
   return el.length
 }
 
@@ -60,7 +60,7 @@ add.addEventListener('click', function(){
   form_gr3.appendChild(input3)
   div_row.appendChild(form_gr3)
 
-  console.log(div_row)
+  // console.log(div_row)
 
   const address_branch = document.createElement('div')
   address_branch.className += "py-2 border-top border-bottom"
@@ -87,4 +87,8 @@ add.addEventListener('click', function(){
   address_branch.appendChild(div_row)
   address_branch.appendChild(div_detail)
   branch.appendChild(address_branch)  
+
+
+  num = document.getElementById('num_branch')
+  num.value() = get_amount_branch() + 1
 })

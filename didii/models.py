@@ -6,13 +6,13 @@ from django.db import models
 from pkg_resources import to_filename
 
 # Create your models here.
-
-class House(models.Model):
-    pass
 class account(models.Model):
     id = models.CharField(max_length=10, primary_key=True)
     username = models.CharField(max_length=10)
     password = models.CharField(max_length=10)
+    
+    def get_id_acc(self):
+        return self.id
     
 class groupuser(models.Model):
     id_gr = models.CharField(max_length=10, primary_key=True)
@@ -24,7 +24,12 @@ class address(models.Model):
     quan_huyen = models.CharField(max_length=20)
     phuong_xa = models.CharField(max_length=20)
     duong = models.CharField(max_length=20)
-    so_nha = models.CharField(max_length=10)
+    
+    def get_id_add(self):
+        return self.id_add
+    
+    def get_address(self):
+        return self.duong + ", " + self.phuong_xa + ", " + self.quan_huyen + ", " + self.tinh_tp
     
 class customer(models.Model):
     id_cus = models.ForeignKey(account, on_delete=models.CASCADE, to_field='id')
@@ -36,7 +41,8 @@ class customer(models.Model):
     phone = models.CharField(max_length=10)
     id_add = models.ForeignKey(address, on_delete=models.CASCADE, to_field='id_add')
     
-
+    def get_id_cus(self):
+        return self.id_cus
     
 class landlord(models.Model):
     id_landlord = models.CharField(max_length=10, primary_key=True)
@@ -48,13 +54,14 @@ class landlord(models.Model):
     phone = models.CharField(max_length=10)
     id_add = models.ForeignKey(address, on_delete=models.CASCADE, to_field='id_add')
     numbranch = models.IntegerField()
-    id_branch = models.CharField(max_length=10, unique=True)
     vote = models.FloatField()
     status = models.BooleanField()
     
+    def get_id_ll(self):
+        return self.id_landlord
+    
 class branch(models.Model):
-    id_branch = models.ForeignKey(landlord, on_delete=models.CASCADE, to_field='id_branch')
-    id_landlord = models.CharField(max_length=10)
+    id_landlord = models.ForeignKey(landlord, on_delete=models.CASCADE, to_field='id_landlord')
     id_add = models.ForeignKey(address, on_delete=models.CASCADE, to_field='id_add')
     
 class post(models.Model):

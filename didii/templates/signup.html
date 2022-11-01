@@ -10,8 +10,11 @@
     <link rel="stylesheet" href="{% static 'css/signup.css' %}">
 </head>
 <body>
-    <div class="p-2">
-        <div class="wrapper p-4 mx-auto">
+    <div class="border-bottom p-2">
+        <img  src="{% static 'img/logo.svg' %}" width="5%">
+    </div>
+    <div class="p-2 border">
+        <div class="wrapper p-4 mx-auto border">
             <div class="title-text">
                 <div class="title login">thông tin chủ trọ</div>
                 <div class="title signup">thông tin khách</div>
@@ -80,27 +83,32 @@
                         </div>
                         <div class="text-center d-flex justify-content-center mt-3">
                             <a type="submit" class="text-reset border btn w-25" id="add_branch" style="padding-top: 12px;">thêm địa chỉ</a>
+                            <input type="number" name="num_branch" hidden id="num_branch">
                         </div>
                     </div>
                     <div class="form-outline mb-2">
                         <label class="form-label">email</label>
                         <input name="CT_email" class="form-control" required>
                     </div>
+                    <div class="form-outline mb-2">
+                        <label class="form-label">mat khau</label>
+                        <input name="CT_pass" class="form-control" required>
+                    </div>
                     <div class="text-center">
                         <input type="submit" class="btn btn-primary btn-block mb-4" value="đăng kí"></input>
                     </div>
                 </form>
-                <form action="#" class="signup">
+                <form action="KH_signup/" class="signup">
                     {% csrf_token %}
                     <div class="form-outline mb-2">
                         <div class="row">
                             <div class="col-8">
                                 <label class="form-label">tên</label>
-                                <input class="form-control" required>
+                                <input name="KH_name" class="form-control" required>
                             </div>
                             <div class="col-4">
                                 <label class="form-label">năm sinh</label>
-                                <input class="form-control" required>
+                                <input name="KH_age" class="form-control" required>
                             </div>
                         </div>
                     </div>
@@ -108,11 +116,11 @@
                         <div class="row">
                             <div class="col-6">
                                 <label class="form-label">số điện thoại</label>
-                                <input class="form-control" required>
+                                <input name="KH_SDT" class="form-control" required>
                             </div>
                             <div class="col-6">
                                 <label class="form-label">giới tính</label>
-                                <input class="form-control" required>
+                                <input name="gender" class="form-control" required>
                             </div>
                         </div>
                     </div>
@@ -120,25 +128,29 @@
                         <div class="row">
                             <div class="col-4">
                                 <label class="form-label">tỉnh/thành phố</label>
-                                <input class="form-control" required>
+                                <input name="KH_city" class="form-control" required>
                             </div>
                             <div class="col-4">
                                 <label class="form-label">quận/huyện</label>
-                                <input class="form-control" required>
+                                <input name="KH_district" class="form-control" required>
                             </div>
                             <div class="col-4">
                                 <label class="form-label">phường/xã/thị trấn</label>
-                                <input class="form-control" required>
+                                <input name="KH_ward" class="form-control" required>
                             </div>
                         </div>
                         <div>
                             <label class="form-label">số nhà đường</label>
-                            <input class="form-control" required>
+                            <input name="KH_street" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-outline mb-2">
                         <label class="form-label">email</label>
-                        <input class="form-control" required>
+                        <input name="KH_email" class="form-control" required>
+                    </div>
+                    <div class="form-outline mb-2">
+                        <label class="form-label">mat khau</label>
+                        <input name="CT_email" class="form-control" required>
                     </div>
                     <div class="text-center">
                         <input type="submit" class="btn btn-primary btn-block mb-4" value="đăng kí"></input>

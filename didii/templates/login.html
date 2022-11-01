@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,10 @@
     <title>Document</title>
 </head>
 <body>
+  {% comment %} {% include 'snippets/message.html' %} {% endcomment %}
+    <div class="border-bottom p-2">
+      <img  src="{% static 'img/logo.svg' %}" width="5%">
+    </div>
     <div class="row m-2">
         <div class="col-9">
         </div>
@@ -20,13 +25,13 @@
               <!-- Email input -->
               <div class="form-outline mb-2">
                   <label class="form-label">ten dang nhap</label>
-                <input class="form-control" name="username"/>
+                  <input class="form-control" name="username" required/>
               </div>
             
               <!-- Password input -->
               <div class="form-outline mb-4">
                   <label class="form-label" >mat khau</label>
-                <input class="form-control" name="password"/>
+                <input class="form-control" name="password" required type="password"/>
               </div>
             
               <!-- 2 column grid layout for inline styling -->
