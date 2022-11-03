@@ -94,3 +94,20 @@ add.addEventListener('click', function(){
 })
 
 
+function checkPass(el1, el2){
+  const pass = document.getElementsByName(el1)[0]
+  const retype = document.getElementsByName(el2)[0]
+  retype.addEventListener('blur', function(){
+    if(pass.value != retype.value){
+      pass.style.cssText = "border: 1px solid red;"
+      retype.style.cssText = "border: 1px solid red;"
+    }
+    else{
+      pass.style.cssText = "border: 1px solid green;"
+      retype.style.cssText = "border: 1px solid green;"
+    }
+  })
+}
+
+checkPass("CT_pass", "CT_retype_pass")
+checkPass("KH_pass", "KH_retype_pass")

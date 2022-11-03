@@ -5,7 +5,7 @@ from turtle import left
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template import loader
-from .models import account, address, customer
+from .models import *
 from django.urls import reverse
 from django.contrib import messages
 import sys
@@ -21,11 +21,8 @@ def renderLogin(request):
     return HttpResponse(loader.get_template('login.html').render())
 
 def renderSignup(request):
-    return HttpResponse(loader.get_template("signup.html").render())
-
-def renderCreateAcc(request):
-    return HttpResponse(loader.get_template('create_account.html').render())
-
+    # return HttpResponse(loader.get_template("signup.html").render())
+    return render(request, 'signup.html')
 
 @csrf_exempt
 def checklogin(request):
@@ -79,26 +76,39 @@ def CT_signup(request):
     CT_add_ward = request.POST['CT_add_ward']
     CT_add_street = request.POST['CT_add_street']
     CT_num_branch = request.POST['num_branch']
+    CT_email = request.POST['CT_email']
+    CT_pass = request.POST['CT_pass']
     
-    acc = account.objects.filter(username = CT_email).values()
+    acc = account.objects.filter(username = CT_email).order_by('id').first()
+    print(acc)
+    print(acc is None)
     
-    # print(type(acc))
     if acc is not None:
-        return HttpResponseRedirect("/didii/renderLogin/signup/")
-    
-    KH_acc = account(id = createPK(account, "acc"),
-                     username = CT_email,
-                     password = CT_pass
-                     )
-    KH_acc.save()
-    # KH_info = customer(id_cus = createPK(customer, "cus"),
-    #                    )
-    
-    KH_add = address(id_add = createPK(address, "add"),
-                      tinh_tp = CT_add_city,
-                      quan_huyen = CT_add_district,
-                      phuong_xa = CT_add_ward,
-                      duong = CT_add_street)
-    KH_add.save()
-    # print(CT_age)
-    return render(request, 'index.html')
+        CT_acc = account(id = createPK(account, "acc"),
+                         username = CT_email,
+                         password = CT_pass)
+        CT_acc.save()
+        
+        CT_add = address(id_add = createPK(address, "add"),
+                         tinh_tp = CT_add_city,
+                         quan_huyen = CT_add_district,
+                         phuong_xa = CT_add_ward,
+                         duong = CT_add_street)
+        CT_add.save()
+        
+        CT_info = landlord(id_cus = CT_acc.id,
+                           id_gr = "CT",
+                           name_cus = CT_name,
+                           age = CT_age,
+                           gender = CT_gender,
+                           email = CT_email,
+                           phone = CT_SDT,
+                           id_add = CT_add.id_add,
+                           numbranch = CT_num_branch,
+                           vote = '',
+                           status = '')
+        CT_info.save()
+        return HttpResponse('index.html')
+    else:
+        return HttpResponseRedirect('/didii/renderLogin/signup/')
+        
