@@ -88,7 +88,9 @@ add.addEventListener('click', function(){
   address_branch.appendChild(div_detail)
   branch.appendChild(address_branch)  
 
-
   num = document.getElementById('num_branch')
-  num.value() = get_amount_branch() + 1
+  num.value = get_amount_branch()
+  console.log(num.value)
 })
+
+

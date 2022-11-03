@@ -23,6 +23,9 @@ def renderLogin(request):
 def renderSignup(request):
     return HttpResponse(loader.get_template("signup.html").render())
 
+def renderCreateAcc(request):
+    return HttpResponse(loader.get_template('create_account.html').render())
+
 
 @csrf_exempt
 def checklogin(request):
@@ -64,6 +67,7 @@ def createPK(table_name, key):
     str_2 = (key, str(table.count() + 1))
     return "_".join(str_2) 
 
+
 @csrf_exempt
 def CT_signup(request):
     CT_name = request.POST['CT_name']
@@ -74,15 +78,21 @@ def CT_signup(request):
     CT_add_district = request.POST['CT_add_district']
     CT_add_ward = request.POST['CT_add_ward']
     CT_add_street = request.POST['CT_add_street']
-    CT_email = request.POST['CT_email']
-    CT_pass = request.POST['CT_pass']
     CT_num_branch = request.POST['num_branch']
     
-    KH_acc = account(id = createPK(account, "acc"),
-                     )
+    acc = account.objects.filter(username = CT_email).values()
     
-    KH_info = customer(id_cus = createPK(customer, "cus"),
-                       )
+    # print(type(acc))
+    if acc is not None:
+        return HttpResponseRedirect("/didii/renderLogin/signup/")
+    
+    KH_acc = account(id = createPK(account, "acc"),
+                     username = CT_email,
+                     password = CT_pass
+                     )
+    KH_acc.save()
+    # KH_info = customer(id_cus = createPK(customer, "cus"),
+    #                    )
     
     KH_add = address(id_add = createPK(address, "add"),
                       tinh_tp = CT_add_city,
