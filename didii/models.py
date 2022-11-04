@@ -6,7 +6,7 @@ from django.db import models
 from pkg_resources import to_filename
 
 # Create your models here.
-class account(models.Model):
+class account(models.Model): 
     id = models.CharField(max_length=10, primary_key=True)
     username = models.CharField(max_length=10)
     password = models.CharField(max_length=10)
@@ -14,8 +14,8 @@ class account(models.Model):
     def get_id_acc(self):
         return self.id
     
-class groupuser(models.Model):
-    id_gr = models.CharField(max_length=10, primary_key=True)
+class groupuser(models.Model):  
+    id_gr = models.CharField(max_length=10, primary_key=True, unique=True)
     name_gr = models.CharField(max_length=10)
 
 class address(models.Model):
@@ -45,7 +45,7 @@ class customer(models.Model):
         return self.id_cus
     
 class landlord(models.Model):
-    id_landlord = models.CharField(max_length=10, primary_key=True)
+    id_landlord = models.ForeignKey(account, on_delete=models.CASCADE, to_field='id')
     id_gr = models.ForeignKey(groupuser, on_delete=models.CASCADE, to_field='id_gr')
     name = models.CharField(max_length=50)
     age = models.DateField()
@@ -61,12 +61,12 @@ class landlord(models.Model):
         return self.id_landlord
     
 class branch(models.Model):
-    id_landlord = models.ForeignKey(landlord, on_delete=models.CASCADE, to_field='id_landlord')
+    id_landlord = models.ForeignKey(landlord, on_delete=models.CASCADE)
     id_add = models.ForeignKey(address, on_delete=models.CASCADE, to_field='id_add')
     
 class post(models.Model):
     id_post = models.CharField(max_length=10, primary_key=True)
-    id_landlord = models.ForeignKey(landlord, on_delete=models.CASCADE, to_field='id_landlord')
+    id_landlord = models.ForeignKey(landlord, on_delete=models.CASCADE)
     date = models.DateField()
     title = models.CharField(max_length=50)
     content = models.CharField(max_length=250)
@@ -92,7 +92,7 @@ class interact(models.Model):
     
 class schedule(models.Model):
     id_schedule = models.CharField(max_length=10, primary_key=True)
-    id_landlord = models.ForeignKey(landlord, on_delete=models.CASCADE, to_field='id_landlord')
+    id_landlord = models.ForeignKey(landlord, on_delete=models.CASCADE)
     id_post = models.ForeignKey(post, on_delete=models.CASCADE, to_field="id_post")
     id_cus = models.ForeignKey(account, on_delete=models.CASCADE, to_field='id')
     appointment_date = models.DateField()

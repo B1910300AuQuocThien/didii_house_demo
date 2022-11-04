@@ -53,16 +53,18 @@
                             </div>
                             <div class="col-6">
                                 <label class="form-label">giới tính</label>
-                                <input name="CT_gender" class="form-control" required>
+                                <select name="CT_gender" class="form-control" required>
+                                    <option value="True">Nam</option>
+                                    <option value="False">Nữ</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                     <div class="form-outline my-2">
                         <div id="branch">
                             <div class="py-2 border-top border-bottom">
-                                <div id="first_branch" class="text-center mb-2" hidden>
-                                    chi nhánh 
-                                        <span class="branch_counter">1</span>
+                                <div id="first_branch" class="text-center mb-2">
+                                    địa chỉ chính
                                 </div>
                                 <div class="row">
                                     <div class="col-4">
@@ -86,7 +88,7 @@
                         </div>
                         <div class="text-center d-flex justify-content-center mt-3">
                             <a class="text-reset border btn w-25" id="add_branch" style="padding-top: 12px;">thêm địa chỉ</a>
-                            <input type="number" name="num_branch" hidden id="num_branch">
+                            <input type="number" name="num_branch" hidden id="num_branch" value=0>
                         </div>
                         <div class="form-outline mb-2">
                             <label class="form-label">email</label>
@@ -94,11 +96,11 @@
                         </div>
                         <div class="form-outline mb-2">
                             <label class="form-label">mat khau</label>
-                            <input name="CT_pass" class="form-control" required>
+                            <input name="CT_pass" class="form-control" type="password" required >
                         </div>
                         <div class="form-outline mb-2">
                             <label class="form-label">nhập lại mật khẩu</label>
-                            <input name="CT_retype_pass" class="form-control" required>
+                            <input name="CT_retype_pass" class="form-control" type="password" required>
                         </div>
                     </div>
                     <div class="text-center">
@@ -106,7 +108,7 @@
                         <div hidden>{{ account }}</div>
                     </div>
                 </form>
-                <form action="KH_signup/" class="signup">
+                <form action="KH_signup/" class="signup" method="post">
                     {% csrf_token %}
                     <div class="form-outline mb-2">
                         <div class="row">
@@ -128,7 +130,10 @@
                             </div>
                             <div class="col-6">
                                 <label class="form-label">giới tính</label>
-                                <input name="gender" class="form-control" required>
+                                <select name="KH_gender" class="form-control" required>
+                                    <option value="True">Nam</option>
+                                    <option value="False">Nữ</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -136,20 +141,20 @@
                         <div class="row">
                             <div class="col-4">
                                 <label class="form-label">tỉnh/thành phố</label>
-                                <input name="KH_city" class="form-control" required>
+                                <input name="KH_add_city" class="form-control" required>
                             </div>
                             <div class="col-4">
                                 <label class="form-label">quận/huyện</label>
-                                <input name="KH_district" class="form-control" required>
+                                <input name="KH_add_district" class="form-control" required>
                             </div>
                             <div class="col-4">
                                 <label class="form-label">phường/xã/thị trấn</label>
-                                <input name="KH_ward" class="form-control" required>
+                                <input name="KH_add_ward" class="form-control" required>
                             </div>
                         </div>
                         <div>
                             <label class="form-label">số nhà đường</label>
-                            <input name="KH_street" class="form-control" required>
+                            <input name="KH_add_street" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-outline mb-2">
@@ -158,11 +163,11 @@
                     </div>
                     <div class="form-outline mb-2">
                         <label class="form-label">mat khau</label>
-                        <input name="KH_pass" class="form-control" required>
+                        <input name="KH_pass" class="form-control" type="password" required>
                     </div>
                     <div class="form-outline mb-2">
                         <label class="form-label">nhập lại mật khẩu</label>
-                        <input name="KH_retype_pass" class="form-control" required>
+                        <input name="KH_retype_pass" class="form-control" type="password" required>
                     </div>
                     <div class="text-center">
                         <input type="submit" class="btn btn-primary btn-block mb-4" value="đăng kí"></input>
