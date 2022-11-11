@@ -70,6 +70,8 @@ TEMPLATES = [
     },
 ]
 
+
+
 WSGI_APPLICATION = 'didii_house.wsgi.application'
 
 

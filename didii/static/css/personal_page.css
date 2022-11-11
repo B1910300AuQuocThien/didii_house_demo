@@ -1,0 +1,13 @@
+.edit_info div form{
+    position: relative;
+    bottom: 450px;
+    left: auto;
+    z-index: 2;
+    background-color: white;
+    box-shadow: 0 0 .2rem #fff,
+            0 0 .2rem #fff,
+            0 0 2rem #d5b4e2,
+            0 0 0.8rem #eee2f3,
+            0 0 2.8rem #ffffff,
+            inset 0 0 1.3rem #ffffff;
+}

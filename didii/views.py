@@ -8,7 +8,6 @@ from django.template import loader
 from .models import *
 from django.urls import reverse
 from django.contrib import messages
-import sys
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
@@ -24,28 +23,28 @@ def renderSignup(request):
     # return HttpResponse(loader.get_template("signup.html").render())
     return render(request, 'signup.html')
 
+def renderPersonal(request):
+    # return HttpResponseRedirect(loader.get_template('personal.html').render())
+    return render(request, 'personal.html')
+
 @csrf_exempt
 def checklogin(request):
     username = request.POST['username']
     password = request.POST['password']
-    acc = account.objects.all().values()
-    # for i in range(0, acc.count()):
-    #     print(acc[i]['id'])
-    # print(username)
-    context = {
-        'username': username,
-        
-    }
-    # print(context['username'])
-    check = 0
-    for i in range(0, acc.count()):
-        if acc[i]['username'] == username and acc[i]['password'] == password:
-            check = 1
-            break
-    if check == 0:
-        # messages.error(request, "tai khoan không tôn tai")
-        return HttpResponseRedirect("/didii/renderLogin/")
-    return render(request, 'index.html', {'name': username, 'url': "logout/", 'text': "Đăng xuất"})
+    name = ""
+    person_1 = landlord.objects.filter(id_landlord__username = username, id_landlord__password = password).select_related('id_landlord')
+    person_2 = customer.objects.filter(id_cus__username = username, id_cus__password = password).select_related('id_cus')
+    
+    if person_1.first() is None and person_2.first() is None:
+        messages.add_message(request, messages.ERROR, "tai khoan khong ton tai", extra_tags='ex-tag')
+        url = render(request, "login.html")
+        return HttpResponse(url)
+    else:
+        if person_1.first() is not None:
+            name = person_1.first().get_name()
+        else:
+            name = person_2.first().get_name()
+    return render(request, 'index.html', {'name': name, 'url': "logout/", 'text': "Đăng xuất"})
     
 def login(request):
     return HttpResponseRedirect(reverse('renderLogin'))
@@ -63,7 +62,6 @@ def createPK(table_name, key):
     # print(key + "_" + (table.count + 1))
     str_2 = (key, str(table.count() + 1))
     return "_".join(str_2) 
-
 
 @csrf_exempt
 def CT_signup(request):
@@ -101,14 +99,14 @@ def CT_signup(request):
         CT_add.save()
         # print(CT_add)
         
-        CT_info = landlord(id_landlord = account.objects.get(id = CT_acc.get_id_acc()),
+        CT_info = landlord(id_landlord = account.objects.get(id = CT_acc.get_id()),
                            id_gr = groupuser.objects.get(id_gr = 'CT'),
                            name = CT_name,
                            age = CT_age,
                            gender = CT_gender,
                            email = CT_email,
                            phone = CT_phone,
-                           id_add = address.objects.get(id_add = CT_add.get_id_add()),
+                           id_add = address.objects.get(id_add = CT_add.get_id()),
                            numbranch = CT_num_branch,
                            vote = 5,
                            status = True)
@@ -122,8 +120,8 @@ def CT_signup(request):
                                        phuong_xa = CT_add_ward[i + 1],
                                        duong = CT_add_street[i + 1])
                CT_add_branch.save() 
-               branch_info = branch(id_landlord = landlord.objects.get(id_landlord = CT_info.get_id_ll()),
-                                    id_add = address.objects.get(id_add = CT_add_branch.get_id_add()))
+               branch_info = branch(id_landlord = landlord.objects.get(id_landlord = CT_info.get_id()),
+                                    id_add = address.objects.get(id_add = CT_add_branch.get_id()))
                branch_info.save()
                
         return render(request, "index.html", {'name': CT_name, 'url': "logout/", 'text': "Đăng xuất"})
@@ -165,14 +163,14 @@ def KH_signup(request):
                          duong = KH_add_street)
         KH_add.save()
     
-        KH_info = customer(id_cus = account.objects.get(id = KH_acc.get_id_acc()),
+        KH_info = customer(id_cus = account.objects.get(id = KH_acc.get_id()),
                            id_gr = groupuser.objects.get(id_gr = "KH"),
                            name_cus = KH_name,
                            age = KH_age,
                            gender = KH_gender,
                            email = KH_email,
                            phone = KH_phone,
-                           id_add = address.objects.get(id_add = KH_add.get_id_add()))
+                           id_add = address.objects.get(id_add = KH_add.get_id()))
         KH_info.save()
         return render(request, "index.html", {'name': KH_name, 'url': "logout/", 'text': "Đăng xuất"})
     else:

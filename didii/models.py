@@ -11,9 +11,11 @@ class account(models.Model):
     username = models.CharField(max_length=10)
     password = models.CharField(max_length=10)
     
-    def get_id_acc(self):
+    def get_id(self):
         return self.id
     
+    def get_username(self):
+        return self.username
 class groupuser(models.Model):  
     id_gr = models.CharField(max_length=10, primary_key=True, unique=True)
     name_gr = models.CharField(max_length=10)
@@ -25,14 +27,14 @@ class address(models.Model):
     phuong_xa = models.CharField(max_length=20)
     duong = models.CharField(max_length=20)
     
-    def get_id_add(self):
+    def get_id(self):
         return self.id_add
     
     def get_address(self):
         return self.duong + ", " + self.phuong_xa + ", " + self.quan_huyen + ", " + self.tinh_tp
     
 class customer(models.Model):
-    id_cus = models.ForeignKey(account, on_delete=models.CASCADE, to_field='id')
+    id_cus = models.ForeignKey(account, on_delete=models.CASCADE)
     id_gr = models.ForeignKey(groupuser, on_delete=models.CASCADE, to_field='id_gr')
     name_cus = models.CharField(max_length=50)
     age = models.DateField()
@@ -41,11 +43,22 @@ class customer(models.Model):
     phone = models.CharField(max_length=10)
     id_add = models.ForeignKey(address, on_delete=models.CASCADE, to_field='id_add')
     
-    def get_id_cus(self):
+    def get_id(self):
         return self.id_cus
     
+    def get_name(self):
+        return self.name_cus
+    
+    def get_age(self):
+        return self.age
+    
+    def get_email(self):
+        return self.email
+    
+    def get_phone(self):
+        return self.phone
 class landlord(models.Model):
-    id_landlord = models.ForeignKey(account, on_delete=models.CASCADE, to_field='id')
+    id_landlord = models.ForeignKey(account, on_delete=models.CASCADE)
     id_gr = models.ForeignKey(groupuser, on_delete=models.CASCADE, to_field='id_gr')
     name = models.CharField(max_length=50)
     age = models.DateField()
@@ -57,12 +70,31 @@ class landlord(models.Model):
     vote = models.FloatField()
     status = models.BooleanField()
     
-    def get_id_ll(self):
+    def get_id(self):
         return self.id_landlord
+    
+    def get_name(self):
+        return self.name
+    
+    def get_age(self):
+        return self.age
+    
+    def get_phone(self):
+        return self.phone
+    
+    def get_count_branch(self):
+        return self.numbranch
+    
+    def get_vote(self):
+        return self.vote
+    
+    def get_status(self):
+        return self.status
     
 class branch(models.Model):
     id_landlord = models.ForeignKey(landlord, on_delete=models.CASCADE)
     id_add = models.ForeignKey(address, on_delete=models.CASCADE, to_field='id_add')
+    
     
 class post(models.Model):
     id_post = models.CharField(max_length=10, primary_key=True)
@@ -78,6 +110,24 @@ class post(models.Model):
     cost = models.FloatField()
     status = models.BooleanField()
     
+    def get_id(self):
+        return self.id_post
+    
+    def get_date(self):
+        return self.date
+    
+    def get_title(self):
+        return self.title
+    
+    def get_vote(self):
+        return self.vote
+    
+    def get_cost(self):
+        return self.cost
+    
+    def get_status(self):
+        return self.status
+    
 class comment(models.Model):
     id_cmt = models.CharField(max_length=10, primary_key=True)
     id_post = models.ForeignKey(post, on_delete=models.CASCADE, to_field='id_post')
@@ -85,10 +135,27 @@ class comment(models.Model):
     date = models.DateField()
     cmt = models.CharField(max_length=250)
     
+    def get_id(self):
+        return self.id_cmt
+    
+    def get_date(self):
+        return self.date
+    
+    def get_cmt(self):
+        return self.cmt
 class interact(models.Model):
     id_interact = models.CharField(max_length=10, primary_key=True)
     love_count = models.IntegerField()
     cmt_count = models.IntegerField()
+    
+    def get_id(self):
+        return self.id_interact
+    
+    def get_love(self):
+        return self.love_count
+    
+    def get_cmt_count(self):
+        return self.cmt_count
     
 class schedule(models.Model):
     id_schedule = models.CharField(max_length=10, primary_key=True)
@@ -98,3 +165,11 @@ class schedule(models.Model):
     appointment_date = models.DateField()
     booking_date = models.DateField()
     
+    def get_id(self):
+        return self.id_schedule
+    
+    def get_appointment_date(self):
+        return self.appointment_date
+    
+    def get_booking_date(self):
+        return self.booking_date

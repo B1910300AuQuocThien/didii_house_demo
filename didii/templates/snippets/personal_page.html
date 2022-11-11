@@ -1,0 +1,26 @@
+{% load static %}
+<div class="col-9">
+    <div class="row py-3 border-bottom ">
+        <div class="col-3 d-flex justify-content-end">
+            <img class="fluid-img" src="{% static 'img/avatar.png' %}" alt="" width="50%">
+        </div>
+        <div class="col-6">
+            <p class="h2">{{ name }}</p>
+            <p class="">{{ gmail }}</p>
+            <p class>{{ address }}</p>
+        </div>
+        <div class="col-3">
+            <div class="border rounded-pill p-2 text-center mb-1 shadow-sm">
+                <a href="#" id="btn_edit_info" class="ml-2 text-decoration-none text-reset">chỉnh sửa thông tin</a>
+            </div>
+            <div class="border rounded-pill p-2 text-center mb-1 shadow-sm">
+                <a id="btn_edit_profile" class="ml-2 text-decoration-none text-reset">chỉnh sửa trang cá nhân</a>
+            </div>
+            <div class="border rounded-pill p-2 text-center mb-1 shadow-sm">
+                <a id="btn_create_post" class="ml-2 text-decoration-none text-reset">tạo bài viết</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
