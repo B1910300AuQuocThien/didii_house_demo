@@ -1,6 +1,19 @@
-.edit_info div form{
+div #btn_edit_info{
     position: relative;
-    bottom: 450px;
+    z-index: 2;
+    cursor: pointer;
+    overflow: hidden;
+}
+.edit_info, .edit_profile, .create_post{
+    height: 330px;
+}
+#post_content{
+    padding: 0px;
+    height: 100px;
+}
+.edit_info form, .create_post form{
+    position: relative;
+    top: -1355px;
     left: auto;
     z-index: 2;
     background-color: white;
@@ -10,4 +23,14 @@
             0 0 0.8rem #eee2f3,
             0 0 2.8rem #ffffff,
             inset 0 0 1.3rem #ffffff;
+    
+}
+        
+.background{
+    z-index: 1;
+    position: absolute;
+    top: -490px;
+    height: 280%;
+    background-color: #d5b4e29c;
+    filter: blur(2px);
 }

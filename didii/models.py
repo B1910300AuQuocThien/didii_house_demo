@@ -57,6 +57,9 @@ class customer(models.Model):
     
     def get_phone(self):
         return self.phone
+    
+    def get_id_add(self):
+        return self.id_add
 class landlord(models.Model):
     id_landlord = models.ForeignKey(account, on_delete=models.CASCADE)
     id_gr = models.ForeignKey(groupuser, on_delete=models.CASCADE, to_field='id_gr')
@@ -91,6 +94,12 @@ class landlord(models.Model):
     def get_status(self):
         return self.status
     
+    def get_mail(self):
+        return self.email
+    
+    def get_id_add(self):
+        return self.id_add
+    
 class branch(models.Model):
     id_landlord = models.ForeignKey(landlord, on_delete=models.CASCADE)
     id_add = models.ForeignKey(address, on_delete=models.CASCADE, to_field='id_add')
@@ -102,7 +111,7 @@ class post(models.Model):
     date = models.DateField()
     title = models.CharField(max_length=50)
     content = models.CharField(max_length=250)
-    # img
+    img = models.ImageField(upload_to='images', default="")
     id_add = models.ForeignKey(address, on_delete=models.CASCADE, to_field='id_add')
     id_interact_count = models.ForeignKey("interact", on_delete=models.CASCADE, to_field='id_interact')
     id_cmt = models.ForeignKey("comment", on_delete=models.CASCADE, to_field='id_cmt')

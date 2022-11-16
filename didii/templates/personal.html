@@ -11,107 +11,161 @@
 </head>
 <body>
     {% include './snippets/header.html' with message=message%}
-    <div class="row mx-2">
-        {% include './snippets/personal_page.html' %}
+    <div class="row mx-2  ">
+        <div class="col-9">
+            <div class="row py-3 border-bottom ">
+                <div class="col-3 d-flex justify-content-end">
+                    <img class="fluid-img" src="{% static 'img/avatar.png' %}" alt="" width="50%">
+                </div>
+                <div class="col-6">
+                    <p class="h2">{{ name }}</p>
+                    <p class="">{{ email }}</p>
+                    <p class>{{ address }}</p>
+                </div>
+                <div class="col-3">
+                    <div class="border rounded-pill p-2 text-center mb-1 shadow-sm">
+                        <a href="#" id="btn_edit_info" class="ml-2 text-decoration-none text-reset" >chỉnh sửa thông tin</a>
+                    </div>
+                    <div class="border rounded-pill p-2 text-center mb-1 shadow-sm">
+                        <a href="#" id="btn_edit_profile" class="ml-2 text-decoration-none text-reset">chỉnh sửa trang cá nhân</a>
+                    </div>
+                    <div class="border rounded-pill p-2 text-center mb-1 shadow-sm">
+                        <a href="#" id="btn_create_post" class="ml-2 text-decoration-none text-reset">tạo bài viết</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% include './snippets/right_side.html' %}
     </div>
-    <div class="edit_info" hidden="true">
-        <div class="container w-50">
-            <form action="CT_signup/" method="post" class="login border p-2 rounded">
-                {% csrf_token %}
+    <div class="edit_info mx-auto" hidden>
+        <div class="background w-100"></div>
+        <form action="CT_signup/" method="post" class="login border p-3 rounded w-50 mx-auto">
+            {% csrf_token %}
+            <div class="form-outline mb-2">
+                <div class="row">
+                    <div class="col-8">
+                        <label class="form-label">tên</label>
+                        <input name="CT_name" class="form-control" required>
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label">năm sinh</label>
+                        <input name="CT_age" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-outline mb-2">
+                <div class="row">
+                    <div class="col-6">
+                        <label class="form-label">số điện thoại</label>
+                        <input name="CT_SDT" class="form-control" required>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label">giới tính</label>
+                        <select name="CT_gender" class="form-control" required>
+                            <option value="True">Nam</option>
+                            <option value="False">Nữ</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-outline my-2">
+                <div id="branch">
+                    <div class="py-2 border-top border-bottom">
+                        <div id="first_branch" class="text-center mb-2">
+                            địa chỉ chính
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <label class="form-label">tỉnh/thành phố</label>
+                                <input name="CT_add_city" class="form-control" required>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label">quận/huyện</label>
+                                <input name="CT_add_district" class="form-control" required>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label">phường/xã/thị trấn</label>
+                                <input name="CT_add_ward" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">số nhà đường</label>
+                            <input name="CT_add_street" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center d-flex justify-content-center mt-3">
+                    <a class="btn btn-primary btn-block mb-4" style="padding-top: 12px;">thêm địa chỉ</a>
+                    <input type="number" name="num_branch" hidden id="num_branch" value=0>
+                </div>
                 <div class="form-outline mb-2">
-                    <div class="row">
-                        <div class="col-8">
-                            <label class="form-label">tên</label>
-                            <input name="CT_name" class="form-control" required>
-                        </div>
-                        <div class="col-4">
-                            <label class="form-label">năm sinh</label>
-                            <input name="CT_age" class="form-control" required>
-                        </div>
-                    </div>
+                    <label class="form-label">email</label>
+                    <input name="CT_email" class="form-control" required>
                 </div>
                 <div class="form-outline mb-2">
-                    <div class="row">
-                        <div class="col-6">
-                            <label class="form-label">số điện thoại</label>
-                            <input name="CT_SDT" class="form-control" required>
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label">giới tính</label>
-                            <select name="CT_gender" class="form-control" required>
-                                <option value="True">Nam</option>
-                                <option value="False">Nữ</option>
-                            </select>
-                        </div>
-                    </div>
+                    <label class="form-label">mat khau</label>
+                    <input name="CT_pass" class="form-control" type="password" required >
                 </div>
-                <div class="form-outline my-2">
-                    <div id="branch">
-                        <div class="py-2 border-top border-bottom">
-                            <div id="first_branch" class="text-center mb-2">
-                                địa chỉ chính
-                            </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <label class="form-label">tỉnh/thành phố</label>
-                                    <input name="CT_add_city" class="form-control" required>
-                                </div>
-                                <div class="col-4">
-                                    <label class="form-label">quận/huyện</label>
-                                    <input name="CT_add_district" class="form-control" required>
-                                </div>
-                                <div class="col-4">
-                                    <label class="form-label">phường/xã/thị trấn</label>
-                                    <input name="CT_add_ward" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <label class="form-label">số nhà đường</label>
-                                <input name="CT_add_street" class="form-control" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center d-flex justify-content-center mt-3">
-                        <a class="text-reset border btn w-25" id="add_branch" style="padding-top: 12px;">thêm địa chỉ</a>
-                        <input type="number" name="num_branch" hidden id="num_branch" value=0>
-                    </div>
-                    <div class="form-outline mb-2">
-                        <label class="form-label">email</label>
-                        <input name="CT_email" class="form-control" required>
-                    </div>
-                    <div class="form-outline mb-2">
-                        <label class="form-label">mat khau</label>
-                        <input name="CT_pass" class="form-control" type="password" required >
-                    </div>
-                    <div class="form-outline mb-2">
-                        <label class="form-label">nhập lại mật khẩu</label>
-                        <input name="CT_retype_pass" class="form-control" type="password" required>
-                    </div>
+                <div class="form-outline mb-2">
+                    <label class="form-label">nhập lại mật khẩu</label>
+                    <input name="CT_retype_pass" class="form-control" type="password" required>
                 </div>
-                <div class="row mt-2">
-                    <div class="text-center col-6">
-                        <input type="submit" class="btn btn-primary btn-block mb-4" value="cập nhật thông tin"></input>
-                        <div hidden>{{ account }}</div>
-                    </div>
-                    <div class="text-center col-6">
-                        <input class="btn btn-primary btn-block mb-4" value="hủy bò"></input>
-                        <div hidden>{{ account }}</div>
-                    </div>
+            </div>
+            <div class="row mt-2">
+                <div class="text-center col-6">
+                    <input type="submit" class="btn btn-primary btn-block mb-4" value="cập nhật thông tin"></input>
+                    <div hidden>{{ account }}</div>
                 </div>
-            </form>
-        </div>
+                <div class="text-center col-6">
+                    <input class="btn btn-primary btn-block mb-4" id="btn_cancel_info" value="hủy bò"></input>
+                    <div hidden>{{ account }}</div>
+                </div>
+            </div>
+        </form>
     </div>
     
     <div class="edit_profile" hidden>
-        
+        <div class="background w-100"></div>
+        <form action="">
+
+            <div class="row mt-2">
+                <div class="text-center col-6">
+                    <input type="submit" class="btn btn-primary btn-block mb-4" value="cập nhật thông tin"></input>
+                    <div hidden>{{ account }}</div>
+                </div>
+                <div class="text-center col-6">
+                    <input class="btn btn-primary btn-block mb-4" id="cancel_info" value="hủy bò"></input>
+                    <div hidden>{{ account }}</div>
+                </div>
+            </div>
+        </form>
     </div>
     
-    <div class="create_post" hidden>
-        
+    <div class="create_post ">
+        <form action="create_post/" class="border p-3 rounded w-50 mx-auto">
+            {% csrf_token %}
+            <div class="form-outline my-2">
+                <label class="form-label">nhập tiêu đề</label>
+                <input class="form-control" name="post_title">
+            </div>
+            <div class="form-group my-2">
+                <label class="form-label">nhập nội dung</label>
+                <input class="form-control" name="post_content" rows="3" type="textarea">
+            </div>
+            
+            <div class="row mt-2">
+                <div class="text-center col-6">
+                    <input type="submit" class="btn btn-primary btn-block mb-4" value="cập nhật thông tin"></input>
+                    <div hidden>{{ account }}</div>
+                </div>
+                <div class="text-center col-6">
+                    <input class="btn btn-primary btn-block mb-4" id="btn_cancel_create" value="hủy bò"></input>
+                    <div hidden>{{ account }}</div>
+                </div>
+            </div>
+        </form>
     </div>
     {% include "./snippets/footer.html" %}
-    {% comment %} <script src="{% static 'js/signup.js' %}"></script> {% endcomment %}
     <script src="{% static 'js/personal.js' %}"></script>
 </body>
 </html>

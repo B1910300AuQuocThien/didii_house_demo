@@ -10,6 +10,20 @@ from django.urls import reverse
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 
+
+def createPK(table_name, key):
+    key = 'id_' + key
+    table = table_name.objects.all().values()
+    if table.count() == 0:
+        # return key + str("_") + 1
+        str_1 = (key, str(1))
+        return "_".join(str_1)
+    # print(key + "_" + (table.count + 1))
+    str_2 = (key, str(table.count() + 1))
+    return "_".join(str_2)
+
+
+
 # Create your views here.
 
 def renderIndex(request):
@@ -24,6 +38,8 @@ def renderSignup(request):
     return render(request, 'signup.html')
 
 def renderPersonal(request):
+    # username = request.POST['username']
+    
     # return HttpResponseRedirect(loader.get_template('personal.html').render())
     return render(request, 'personal.html')
 
@@ -34,7 +50,7 @@ def checklogin(request):
     name = ""
     person_1 = landlord.objects.filter(id_landlord__username = username, id_landlord__password = password).select_related('id_landlord')
     person_2 = customer.objects.filter(id_cus__username = username, id_cus__password = password).select_related('id_cus')
-    
+    # print(person_1.first().get_id_add().get_address())
     if person_1.first() is None and person_2.first() is None:
         messages.add_message(request, messages.ERROR, "tai khoan khong ton tai", extra_tags='ex-tag')
         url = render(request, "login.html")
@@ -42,8 +58,17 @@ def checklogin(request):
     else:
         if person_1.first() is not None:
             name = person_1.first().get_name()
+            gmail = person_1.first().get_mail()
+            address = person_1.first().get_id_add().get_address()
         else:
             name = person_2.first().get_name()
+            gmail = person_1.first().get_mail()
+            address = person_1.first().get_id_add().get_address()
+    render(request, 'personal.html', {
+        'name': name,
+        'email': gmail,
+        'address': address
+    })
     return render(request, 'index.html', {'name': name, 'url': "logout/", 'text': "Đăng xuất"})
     
 def login(request):
@@ -51,17 +76,6 @@ def login(request):
     
 def logout(request):
     return HttpResponseRedirect(reverse('renderLogin'))
-
-def createPK(table_name, key):
-    key = 'id_' + key
-    table = table_name.objects.all().values()
-    if table.count() == 0:
-        # return key + str("_") + 1
-        str_1 = (key, str(1))
-        return "_".join(str_1)
-    # print(key + "_" + (table.count + 1))
-    str_2 = (key, str(table.count() + 1))
-    return "_".join(str_2) 
 
 @csrf_exempt
 def CT_signup(request):
