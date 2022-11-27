@@ -5,57 +5,58 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
     {% include 'snippets/link.html' %}
     <title>Document</title>
 </head>
 <body>
   <div class="border-bottom p-2">
       <img  src="{% static 'img/logo.svg' %}" width="5%">
-  </div>
-  <div class="row m-2">
-      <div class="col-9 border rounded">
-        {% if messages %}
+      {% if messages %}
             {% for message in messages %}
                     <div class="alert alert-{{ message.tags }}">{{ message }}</div>
             {% endfor %}
         {% endif %}
-      </div>
-      <div class="col-3 shadow-sm border rounded">
-          <div class="text-center">
+  </div>
+  <div class="main-login p-3">
+      <div class="col-4 border rounded right">
+          <div class="text-center mt-3">
               <h2 class="">Đăng nhập</h2>
           </div>
           <form action="login/" method="post">
           {% csrf_token %}
-              <div class="form-outline mb-2">
-                  <label class="form-label">email</label>
+              <div class="form-outline">
                   <input class="form-control" name="username" required/>
+                  <label class="form-label">email</label>
+                  <div class="cover"></div>
               </div>
 
               <div class="form-outline mb-4">
-                  <label class="form-label" >mật khẩu</label>
                   <input class="form-control" name="password" required type="password"/>
+                  <label class="form-label" >mật khẩu</label>
+                  <div class="cover"></div>
               </div>
 
               <div class="text-center">
-                  <input type="submit" class="btn btn-primary btn-block mb-4" value="sign in"></input>
+                  <input type="submit" class="btn-login mb-4" value="sign in"></input>
               </div>
 
               <div class="text-center mb-2">
-                  <p>chưa có tài khoản <a href="signup/" class="">Đăng kí</a></p>
+                  <p class="text-reset">chưa có tài khoản <a href="signup/" class="">Đăng kí</a></p>
                   <p>hoặc đăng nhập với</p>
-              <button type="button" class="btn btn-link btn-floating mx-1">
+              <button type="button" class="btn btn-link btn-floating mx-1 border text-white bg-dark">
                   <i class="fab fa-facebook-f"></i>
               </button>
 
-              <button type="button" class="btn btn-link btn-floating mx-1">
+              <button type="button" class="btn btn-link btn-floating mx-1 border text-white bg-dark">
                   <i class="fab fa-google"></i>
               </button>
 
-              <button type="button" class="btn btn-link btn-floating mx-1">
+              <button type="button" class="btn btn-link btn-floating mx-1 border text-white bg-dark">
                   <i class="fab fa-twitter"></i>
               </button>
 
-              <button type="button" class="btn btn-link btn-floating mx-1">
+              <button type="button" class="btn btn-link btn-floating mx-1 border text-white bg-dark">
                   <i class="fab fa-github"></i>
               </button>
               </div>

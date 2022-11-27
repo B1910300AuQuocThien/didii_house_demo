@@ -1,20 +1,25 @@
+body{
+    position: relative;
+}
 div #btn_edit_info{
     position: relative;
-    z-index: 2;
+    z-index: 1;
     cursor: pointer;
     overflow: hidden;
 }
 .edit_info, .edit_profile, .create_post{
+    position: absolute;
     height: 330px;
+    width: 100%;
 }
 #post_content{
     padding: 0px;
     height: 100px;
 }
 .edit_info form, .create_post form{
-    position: relative;
-    top: -1355px;
-    left: auto;
+    position: absolute;
+    top: 0px;
+    left: 25%;
     z-index: 2;
     background-color: white;
     box-shadow: 0 0 .2rem #fff,
@@ -29,7 +34,7 @@ div #btn_edit_info{
 .background{
     z-index: 1;
     position: absolute;
-    top: -490px;
+    top: -60px;
     height: 280%;
     background-color: #d5b4e29c;
     filter: blur(2px);

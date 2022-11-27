@@ -1,0 +1,149 @@
+body {
+    position: relative;
+}
+
+/* header */
+.trapezium {
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 50px solid #1B1B1B;
+    z-index: 1;
+}
+
+.menu-icon {
+    position: relative;
+    top: -48px;
+    z-index: 2;
+}
+
+.menu-icon a {
+    position: relative;
+}
+
+.active::after {
+    position: absolute;
+    content: "";
+    border: 2px solid blue;
+    width: 200%;
+    top: 35px;
+    left: -15px;
+}
+
+.head {
+    height: 55px;
+    background-color: #f7f7f7;
+    position: sticky;
+    top: 0px;
+}
+
+/* right side */
+
+.timeline {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: #FFBF00;
+    top: 0;
+    bottom: 0;
+    margin-left: -2px;
+}
+
+.container_right_side {
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+}
+
+.container_right_side::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    right: -17px;
+    background-color: rgb(0, 0, 0);
+    border: 6px solid #FFBF00;
+    top: 9px;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+
+
+.right {
+    left: 10px;
+}
+
+
+.right::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 5px;
+    width: 0;
+    z-index: 1;
+    left: -4px;
+    border: medium solid rgb(255, 255, 255);
+    border-width: 10px 10px 10px 0;
+    border-color: transparent rgb(0, 0, 0) transparent transparent;
+}
+
+.right::after {
+    left: -16px;
+}
+
+/* The actual content */
+.content {
+    padding: 10px 10px;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    border-radius: 6px;
+    left: 6px;
+    border: 1px solid black;
+    width: 100px;
+    height: 50px;
+    cursor: pointer;
+    transform: all .20s;
+}
+
+.content:hover {
+    background-color: #f7f7f7;
+}
+
+@media screen and (max-width: 600px) {
+
+    /* Place the timelime to the left */
+    .timeline::after {
+        left: 31px;
+    }
+
+    .container_right_side {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+
+    .container_right_side::before {
+        left: 60px;
+        border: medium solid rgb(0, 0, 0);
+        border-width: 10px 10px 10px 0;
+        border-color: transparent rgb(5, 5, 5) transparent transparent;
+    }
+
+    .right::after {
+        left: 2px;
+    }
+
+    .right {
+        left: 0%;
+    }
+}
+
+.schedule-message {
+    width: 180px;
+}

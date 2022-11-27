@@ -1,21 +1,21 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/header.css'%}">
+{% comment %} <link rel="stylesheet" href="{% static 'css/header.css'%}"> {% endcomment %}
 <div class="row head mx-2 border-bottom will_hidden" >
     <div class="col-3">
         <img src="{% static 'img/logo.svg' %}" width="25%">
     </div>
     <div class="trapezium col-6">
         <div class="py-2 d-flex justify-content-around menu-icon">
-            <a href="#" class="h3 fa-solid fa-house"></a>
-            <a href="#" class="h3 fa-solid fa-message"></a>
-            <a href="#" class="h3 fa-solid fa-bell"></a>
+            <a href="#" class="h3 fa-solid fa-house text-white "></a>
+            <a href="#" class="h3 fa-solid fa-message text-white "></a>
+            <a href="#" class="h3 fa-solid fa-bell text-white active"></a>
         </div>
     </div>
     <div class=" col-3 py-2 row mb-2">
         <div class="form-group has-feedback col-8">
-            <input type="text" class="form-control" placeholder="Username" />
+            <input type="text" class="form-control"/>
         </div>
-        <button class="col-4 text-white bg-primary rounded border h-50">
+        <button class="col-4 text-white bg-dark rounded border h-50">
             tìm kiếm
         </button>
         </form>

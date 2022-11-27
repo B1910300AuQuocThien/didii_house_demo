@@ -9,6 +9,7 @@ from .models import *
 from django.urls import reverse
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.sessions.models import Session
 
 
 def createPK(table_name, key):
@@ -34,48 +35,45 @@ def renderLogin(request):
     return HttpResponse(loader.get_template('login.html').render())
 
 def renderSignup(request):
-    # return HttpResponse(loader.get_template("signup.html").render())
-    return render(request, 'signup.html')
+    return HttpResponse(loader.get_template("signup.html").render())
+    # return render(request, 'signup.html')
 
 def renderPersonal(request):
-    # username = request.POST['username']
-    
-    # return HttpResponseRedirect(loader.get_template('personal.html').render())
+    request.session['edit_info'] = 'edit_info/'
+    request.session['edit_profile'] = 'edit_profile/'
+    request.session['create_post'] = 'create_post/'
     return render(request, 'personal.html')
 
 @csrf_exempt
 def checklogin(request):
     username = request.POST['username']
     password = request.POST['password']
-    name = ""
-    person_1 = landlord.objects.filter(id_landlord__username = username, id_landlord__password = password).select_related('id_landlord')
-    person_2 = customer.objects.filter(id_cus__username = username, id_cus__password = password).select_related('id_cus')
-    # print(person_1.first().get_id_add().get_address())
-    if person_1.first() is None and person_2.first() is None:
-        messages.add_message(request, messages.ERROR, "tai khoan khong ton tai", extra_tags='ex-tag')
+    acc = account.objects.filter(username = username, password = password)
+    if acc.first() is None:
+        messages.error(request, "tai khoan khong ton tai")
         url = render(request, "login.html")
-        return HttpResponse(url)
+        return url
     else:
-        if person_1.first() is not None:
-            name = person_1.first().get_name()
-            gmail = person_1.first().get_mail()
-            address = person_1.first().get_id_add().get_address()
+        print(acc.first().get_id_gr().get_id())
+        if acc.first().get_id_gr().get_id() == "CT":
+            user = landlord.objects.filter(email = username)
         else:
-            name = person_2.first().get_name()
-            gmail = person_1.first().get_mail()
-            address = person_1.first().get_id_add().get_address()
-    render(request, 'personal.html', {
-        'name': name,
-        'email': gmail,
-        'address': address
-    })
-    return render(request, 'index.html', {'name': name, 'url': "logout/", 'text': "Đăng xuất"})
+            user = customer.objects.filter(email = username)   
+                
+    request.session['name'] = user.first().get_name()
+    request.session['email'] = user.first().get_email().get_username()
+    request.session['address'] = user.first().get_id_add().get_address()
+    request.session['url'] = "logout/"
+    request.session['text'] = "Đăng xuất"   
+    return render(request, 'index.html', {'url': 'logout/', 'text': "dang xuat"})
+    # return HttpResponseRedirect(reverse('index'))
     
 def login(request):
     return HttpResponseRedirect(reverse('renderLogin'))
     
 def logout(request):
-    return HttpResponseRedirect(reverse('renderLogin'))
+    # Session.objects.all().delete()
+    return HttpResponse(loader.get_template("login.html").render())
 
 @csrf_exempt
 def CT_signup(request):
@@ -93,16 +91,16 @@ def CT_signup(request):
     
     # print(CT_add_city[0)
     # return HttpResponse("index.html")
-    acc = account.objects.filter(username = CT_email).order_by('id').first()
+    acc = account.objects.filter(username = CT_email).first()
     
     CT_age = CT_age.split(" / ")
     CT_age = list(reversed(CT_age))
     CT_age = "-".join(CT_age)
 
     if acc is None:
-        CT_acc = account(id = createPK(account, "acc"),
-                         username = CT_email,
-                         password = CT_pass)
+        CT_acc = account(username = CT_email,
+                         password = CT_pass,
+                         id_gr = groupuser.objects.get(id_gr = 'CT'))
         CT_acc.save()
         
         CT_add = address(id_add = createPK(address, "add"),
@@ -113,12 +111,10 @@ def CT_signup(request):
         CT_add.save()
         # print(CT_add)
         
-        CT_info = landlord(id_landlord = account.objects.get(id = CT_acc.get_id()),
-                           id_gr = groupuser.objects.get(id_gr = 'CT'),
-                           name = CT_name,
+        CT_info = landlord(name = CT_name,
                            age = CT_age,
                            gender = CT_gender,
-                           email = CT_email,
+                           email = account.objects.get(username = CT_email),
                            phone = CT_phone,
                            id_add = address.objects.get(id_add = CT_add.get_id()),
                            numbranch = CT_num_branch,
@@ -137,8 +133,9 @@ def CT_signup(request):
                branch_info = branch(id_landlord = landlord.objects.get(id_landlord = CT_info.get_id()),
                                     id_add = address.objects.get(id_add = CT_add_branch.get_id()))
                branch_info.save()
-               
-        return render(request, "index.html", {'name': CT_name, 'url': "logout/", 'text': "Đăng xuất"})
+        
+        request.session['name'] = CT_name
+        return render(request, "index.html", {'url': "logout/", 'text': "Đăng xuất"})
     else:
         return HttpResponseRedirect('/didii/renderLogin/signup/')
         
@@ -158,16 +155,16 @@ def KH_signup(request):
     KH_email = request.POST['KH_email']
     KH_pass = request.POST['KH_pass']
     
-    acc = account.objects.filter(username = KH_email).order_by('id').first()
+    acc = account.objects.filter(username = KH_email).first()
     
     KH_age = KH_age.split(" / ")
     KH_age = list(reversed(KH_age))
     KH_age = "-".join(KH_age)
     
     if acc is None:
-        KH_acc = account(id = createPK(account, "acc"),
-                         username = KH_email,
-                         password = KH_pass)
+        KH_acc = account(username = KH_email,
+                         password = KH_pass,
+                         id_gr =  groupuser.objects.get(id_gr = "KH"))
         KH_acc.save()
         
         KH_add = address(id_add = createPK(address, "add"),
@@ -177,15 +174,23 @@ def KH_signup(request):
                          duong = KH_add_street)
         KH_add.save()
     
-        KH_info = customer(id_cus = account.objects.get(id = KH_acc.get_id()),
-                           id_gr = groupuser.objects.get(id_gr = "KH"),
-                           name_cus = KH_name,
+        KH_info = customer(name_cus = KH_name,
                            age = KH_age,
                            gender = KH_gender,
-                           email = KH_email,
+                           email = account.objects.get(username = KH_email),
                            phone = KH_phone,
                            id_add = address.objects.get(id_add = KH_add.get_id()))
         KH_info.save()
-        return render(request, "index.html", {'name': KH_name, 'url': "logout/", 'text': "Đăng xuất"})
+        request.session['name'] = KH_name
+        request.session['email'] = KH_info.get_email().get_username()
+        request.session['address'] = KH_info.get_id_add().get_address()
+        return render(request, "index.html", {'url': "logout/", 'text': "Đăng xuất"})
     else:
-        return HttpResponseRedirect('/didii/renderLogin/signup/')
+        request.session['error'] = "email da tồn tại"
+        # return HttpResponseRedirect('/didii/renderLogin/signup/')
+        return HttpResponse("signup.html")
+
+
+def edit(request, action):
+    request.session[action] = '#'
+    return render(request, 'personal.html', {'action': action})

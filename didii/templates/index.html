@@ -1,17 +1,18 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <link rel="stylesheet" href="{% static 'css/index.css'%}">
     {% include 'snippets/link.html' %}
 
     <title>Didii House</title>
 </head>
 <body>
     {% include './snippets/header.html' with message=message%}
-    <div class="row mx-2">
+    <div class="row mx-2" style="position: relative;">
         {% include './snippets/left_side.html' with name=name text=text %}
         {% include './snippets/content.html' %}
         {% include './snippets/right_side.html' %}

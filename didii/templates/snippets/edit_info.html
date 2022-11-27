@@ -1,0 +1,84 @@
+<div class="edit_info mx-auto">
+    <div class="background w-100"></div>
+    <form action="CT_signup/" method="post" class="login border p-3 rounded w-50 mx-auto">
+        {% csrf_token %}
+        <div class="form-outline mb-2">
+            <div class="row">
+                <div class="col-8">
+                    <label class="form-label">tên</label>
+                    <input name="CT_name" class="form-control" required>
+                </div>
+                <div class="col-4">
+                    <label class="form-label">năm sinh</label>
+                    <input name="CT_age" class="form-control" required>
+                </div>
+            </div>
+        </div>
+        <div class="form-outline mb-2">
+            <div class="row">
+                <div class="col-6">
+                    <label class="form-label">số điện thoại</label>
+                    <input name="CT_SDT" class="form-control" required>
+                </div>
+                <div class="col-6">
+                    <label class="form-label">giới tính</label>
+                    <select name="CT_gender" class="form-control" required>
+                        <option value="True">Nam</option>
+                        <option value="False">Nữ</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-outline my-2">
+            <div id="branch">
+                <div class="py-2 border-top border-bottom">
+                    <div id="first_branch" class="text-center mb-2">
+                        địa chỉ chính
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <label class="form-label">tỉnh/thành phố</label>
+                            <input name="CT_add_city" class="form-control" required>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label">quận/huyện</label>
+                            <input name="CT_add_district" class="form-control" required>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label">phường/xã/thị trấn</label>
+                            <input name="CT_add_ward" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">số nhà đường</label>
+                        <input name="CT_add_street" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center d-flex justify-content-center mt-3">
+                <a class="btn btn-primary btn-block mb-4" style="padding-top: 12px;">thêm địa chỉ</a>
+                <input type="number" name="num_branch" hidden id="num_branch" value=0>
+            </div>
+            <div class="form-outline mb-2">
+                <label class="form-label">email</label>
+                <input name="CT_email" class="form-control" required>
+            </div>
+            <div class="form-outline mb-2">
+                <label class="form-label">mat khau</label>
+                <input name="CT_pass" class="form-control" type="password" required >
+            </div>
+            <div class="form-outline mb-2">
+                <label class="form-label">nhập lại mật khẩu</label>
+                <input name="CT_retype_pass" class="form-control" type="password" required>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="text-center col-6">
+                <input type="submit" class="btn btn-primary btn-block mb-4" value="cập nhật thông tin"></input>
+            </div>
+            <div class="text-center col-6">
+                <input class="btn btn-primary btn-block mb-4" id="btn_cancel_info" value="hủy bò"></input>
+            </div>
+        </div>
+    </form>
+</div>
