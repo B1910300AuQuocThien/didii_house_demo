@@ -1,28 +1,76 @@
-<div class="border">
+{% load static %}
+<div class="border mt-4 p-3 rounded">
     <div class="post-des">
         <div class="post-title">
-
+            thien
         </div>
         <div class="post-content">
-
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum asperiores quidem corrupti officiis eveniet. Officia quas fuga aliquam corrupti aperiam minima corporis dolorem labore est facere voluptatem, praesentium et nesciunt.
         </div>
     </div>
     <div class="post-img">
-        {% comment %} {% for  in  %}
-            <img src="" alt="">
-        {% endfor %} {% endcomment %}
+        <div class="slideshow-container">
+            <div class="mySlides fade">
+                <div class="numbertext">1 / 3</div>
+                <img class="img-fluid" src="{% static 'img/test_img.webp' %}" >
+            </div>
+            <div class="mySlides fade">
+                <div class="numbertext">2 / 3</div>
+                <img class="img-fluid" src="{% static 'img/test_img.webp' %}" >
+            </div>
+            <div class="mySlides fade">
+                <div class="numbertext">3 / 3</div>
+                <img class="img-fluid" src="{% static 'img/test_img.webp' %}" >
+            </div>
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        <br>
+    </div>
+    <hr>
     <div class="post-interact">
         <div class="row">
-            <a class="like-btn" href="">
-
+            <a class="like-btn text-black col-3" href="">
+                <i class="fa-solid fa-thumbs-up"></i>
+                yêu thích
             </a>
-            <a class="comment" href="">
-
+            <a class="comment col-3 text-black" href="">
+                <i class="fa-solid fa-comment"></i>
+                bình luận
             </a>
-            <a class="book" href="">
-
+            <a class="book col-3 text-black" href="">
+                <i class="fa-solid fa-plus"></i>
+                đặt lịch
             </a>
         </div>
     </div>
-    </div>
 </div>
+<script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Next/previous controls
+    function plusSlides(n) {
+      showSlides((slideIndex += n));
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+      showSlides((slideIndex = n));
+    }
+
+    function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      if (n > slides.length) {
+        slideIndex = 1;
+      }
+      if (n < 1) {
+        slideIndex = slides.length;
+      }
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slides[slideIndex - 1].style.display = "block";
+    }
+</script>

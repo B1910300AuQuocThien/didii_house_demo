@@ -16,16 +16,6 @@ input:focus {
     z-index: 0;
 }
 
-.right {
-    position: relative;
-    box-shadow: 0 14px 28px rgba(189, 189, 189, 0.25), 0 10px 10px rgba(255, 255, 255, 0.22);
-    width: 100px;
-    padding: 10px;
-    margin: 8px auto;
-    background-color: white;
-    border: 1px solid rgb(0, 0, 0);
-}
-
 .form-outline {
     position: relative;
     margin-bottom: 35px;

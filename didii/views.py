@@ -29,6 +29,7 @@ def createPK(table_name, key):
 
 def renderIndex(request):
     # return HttpResponse(loader.get_template('index.html').render())
+    
     return render(request, 'index.html', {'url': "login/", 'text': "Đăng nhập"})
 
 def renderLogin(request):
@@ -51,8 +52,8 @@ def checklogin(request):
     acc = account.objects.filter(username = username, password = password)
     if acc.first() is None:
         messages.error(request, "tai khoan khong ton tai")
-        url = render(request, "login.html")
-        return url
+        # url = render(request, "login.html")
+        return HttpResponseRedirect(reverse('login'))
     else:
         print(acc.first().get_id_gr().get_id())
         if acc.first().get_id_gr().get_id() == "CT":
@@ -64,8 +65,11 @@ def checklogin(request):
     request.session['email'] = user.first().get_email().get_username()
     request.session['address'] = user.first().get_id_add().get_address()
     request.session['url'] = "logout/"
-    request.session['text'] = "Đăng xuất"   
-    return render(request, 'index.html', {'url': 'logout/', 'text': "dang xuat"})
+    request.session['text'] = "Đăng xuất"
+    loop = []
+    for i in range(1, 6):
+        loop.append(i)
+    return render(request, 'index.html', {'url': 'logout/', 'text': "dang xuat", 'loop': loop})
     # return HttpResponseRedirect(reverse('index'))
     
 def login(request):

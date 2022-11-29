@@ -1,24 +1,25 @@
 {% load static %}
-<div class="col-3 pt-2">
-    <div class="border rounded-pill">
-        <img src="{% static 'img/avatar.png'%}" alt="avatar" width="15%">
-        <a class="text-reset text-decoration-none" href="personal/" style="margin-left: 15px;">{{ request.session.name }}</a>
-    </div>
-    <hr>
-
-    <div class="border rounded-pill p-2 text-center mb-2 shadow-sm">
-        <a href="#" class="ml-2 text-decoration-none text-reset">Cai dat</a>
-    </div>
-
-    <div class="border rounded-pill p-2 text-center mb-2 shadow-sm">
-        <a href="#" class="ml-2 text-decoration-none text-reset">Chinh sach</a>
-    </div>
-
-    <div class="border rounded-pill p-2 text-center mb-2 shadow-sm">
-        <a href="#" class="ml-2 text-decoration-none text-reset">Chinh sach</a>
-    </div>
-    <div class="border rounded-pill p-2 text-center mb-2 shadow-sm">
-        <a href="{{ url }}" class="ml-2 text-decoration-none text-danger">{{ text }}</a>
-    </div>
+<div class="col-3 pt-2" style="position: relative;">
+    <div class="left_side">
+        <div class="border rounded-pill">
+            <img src="{% static 'img/avatar.png'%}" alt="avatar" width="15%">
+            <a class="text-reset text-decoration-none" href="personal/" style="margin-left: 15px;">{{ request.session.name }}</a>
+        </div>
+        <hr>
     
+        <div class="border rounded-pill p-2 text-center mb-2 shadow-sm">
+            <a href="#" class="ml-2 text-decoration-none text-reset">Cài đặt</a>
+        </div>
+    
+        <div class="border rounded-pill p-2 text-center mb-2 shadow-sm">
+            <a href="#" class="ml-2 text-decoration-none text-reset">Chính sách</a>
+        </div>
+    
+        <div class="border rounded-pill p-2 text-center mb-2 shadow-sm">
+            <a href="#" class="ml-2 text-decoration-none text-reset">Chính sách</a>
+        </div>
+        <div class="border rounded-pill p-2 text-center mb-2 shadow-sm">
+            <a href="{{ url }}" class="ml-2 text-decoration-none text-danger">{{ text }}</a>
+        </div>
+    </div>
 </div>

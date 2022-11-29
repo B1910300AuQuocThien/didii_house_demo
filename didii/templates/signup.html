@@ -10,175 +10,92 @@
     <link rel="stylesheet" href="{% static 'css/signup.css' %}">
 </head>
 <body>
-    <div class="border-bottom p-2">
-        <img  src="{% static 'img/logo.svg' %}" width="5%">
-        <div>
-            {{ message }}
-        </div>
-    </div>
-    <div class="p-2 border">
-        <div class="wrapper p-4 mx-auto border">
-            <div class="title-text">
-                <div class="title login">thông tin chủ trọ</div>
-                <div class="title signup">thông tin khách</div>
+    {% include 'snippets/header.html' %}
+
+    <div class="main_signup w-50 mx-auto border rounded p-4 mt-4">
+        <form action="signup/" method="post">
+            <div class="row">
+                <div class="form-group col-6">
+                    <label class="form-label">họ và tên</label>
+                    <input class="form-control" name="name" required>
+                </div>
+                <div class="form-group col-3">
+                    <label class="form-label">ngày sinh</label>
+                    <input class="form-control" name="age" required>
+                </div>
+                
             </div>
-            <div class="form-container">
-                <div class="slide-controls">
-                    <input type="radio" name="slide" id="login" checked>
-                    <input type="radio" name="slide" id="signup">
-                    <label for="login" class="slide login">chủ trọ</label>
-                    <label for="signup" class="slide signup">khách</label>
-                <div class="slider-tab"></div>
+            <div class="row">
+                <div class="form-group col-7">
+                    <label class="form-label">số điện thoại</label>
+                    <input class="form-control" name="num_phone" required>
+                </div>
+                <div class="form-group col-4">
+                    <label class="form-label">giới tính</label>
+                    <select name="gender" class="form-select">
+                        <option value="True">Nam</option>
+                        <option value="False">Nữ</option>
+                    </select>
+                </div>
             </div>
-            <div class="form-inner">
-                <form action="CT_signup/" method="post" class="login">
-                    {% csrf_token %}
-                    <div class="form-outline mb-2">
-                        <div class="row">
-                            <div class="col-8">
-                                <label class="form-label">tên</label>
-                                <input name="CT_name" class="form-control" required>
-                            </div>
-                            <div class="col-4">
-                                <label class="form-label">năm sinh</label>
-                                <input name="CT_age" class="form-control" required>
-                            </div>
+            <hr>
+            <div class="form-group w-25">
+                <label class="form-label">loai nguoi dung</label>
+                <select class="form-select">
+                    <option value="CT">chủ trọ</option>
+                    <option value="KH">người thuê trọ</option>
+                </select>
+            </div>
+            <hr>
+            <div class="form-group">
+                <div id="branch">
+                    <div class="py-2">
+                        <div id="first_branch" class="text-center mb-2">
+                            địa chỉ chính
                         </div>
-                    </div>
-                    <div class="form-outline mb-2">
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="form-label">số điện thoại</label>
-                                <input name="CT_SDT" class="form-control" required>
-                            </div>
-                            <div class="col-6">
-                                <label class="form-label">giới tính</label>
-                                <select name="CT_gender" class="form-control" required>
-                                    <option value="True">Nam</option>
-                                    <option value="False">Nữ</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-outline my-2">
-                        <div id="branch">
-                            <div class="py-2 border-top border-bottom">
-                                <div id="first_branch" class="text-center mb-2">
-                                    địa chỉ chính
-                                </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <label class="form-label">tỉnh/thành phố</label>
-                                        <input name="CT_add_city" class="form-control" required>
-                                    </div>
-                                    <div class="col-4">
-                                        <label class="form-label">quận/huyện</label>
-                                        <input name="CT_add_district" class="form-control" required>
-                                    </div>
-                                    <div class="col-4">
-                                        <label class="form-label">phường/xã/thị trấn</label>
-                                        <input name="CT_add_ward" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="mb-2">
-                                    <label class="form-label">số nhà đường</label>
-                                    <input name="CT_add_street" class="form-control" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center d-flex justify-content-center mt-3">
-                            <a class="text-reset border btn w-25" id="add_branch" style="padding-top: 12px;">thêm địa chỉ</a>
-                            <input type="number" name="num_branch" hidden id="num_branch" value=0>
-                        </div>
-                        <div class="form-outline mb-2">
-                            <label class="form-label">email</label>
-                            <input name="CT_email" class="form-control" required>
-                        </div>
-                        <div class="form-outline mb-2">
-                            <label class="form-label">mat khau</label>
-                            <input name="CT_pass" class="form-control" type="password" required >
-                        </div>
-                        <div class="form-outline mb-2">
-                            <label class="form-label">nhập lại mật khẩu</label>
-                            <input name="CT_retype_pass" class="form-control" type="password" required>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <input type="submit" class="btn btn-primary btn-block mb-4" value="đăng kí"></input>
-                        <div hidden>{{ account }}</div>
-                    </div>
-                </form>
-                <form action="KH_signup/" class="signup" method="post">
-                    {% csrf_token %}
-                    <div class="form-outline mb-2">
-                        <div class="row">
-                            <div class="col-8">
-                                <label class="form-label">tên</label>
-                                <input name="KH_name" class="form-control" required>
-                            </div>
-                            <div class="col-4">
-                                <label class="form-label">năm sinh</label>
-                                <input name="KH_age" class="form-control" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-outline mb-2">
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="form-label">số điện thoại</label>
-                                <input name="KH_SDT" class="form-control" required>
-                            </div>
-                            <div class="col-6">
-                                <label class="form-label">giới tính</label>
-                                <select name="KH_gender" class="form-control" required>
-                                    <option value="True">Nam</option>
-                                    <option value="False">Nữ</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-outline mb-2">
                         <div class="row">
                             <div class="col-4">
                                 <label class="form-label">tỉnh/thành phố</label>
-                                <input name="KH_add_city" class="form-control" required>
+                                <input name="city" class="form-control" required>
                             </div>
                             <div class="col-4">
                                 <label class="form-label">quận/huyện</label>
-                                <input name="KH_add_district" class="form-control" required>
+                                <input name="district" class="form-control" required>
                             </div>
                             <div class="col-4">
                                 <label class="form-label">phường/xã/thị trấn</label>
-                                <input name="KH_add_ward" class="form-control" required>
+                                <input name="ward" class="form-control" required>
                             </div>
                         </div>
-                        <div>
+                        <div class="mb-2">
                             <label class="form-label">số nhà đường</label>
-                            <input name="KH_add_street" class="form-control" required>
+                            <input name="street" class="form-control" required>
                         </div>
                     </div>
-                    <div class="form-outline mb-2">
-                        <label class="form-label">email</label>
-                        <input name="KH_email" class="form-control" required>
-                    </div>
-                    <div class="form-outline mb-2">
-                        <label class="form-label">mat khau</label>
-                        <input name="KH_pass" class="form-control" type="password" required>
-                    </div>
-                    <div class="form-outline mb-2">
-                        <label class="form-label">nhập lại mật khẩu</label>
-                        <input name="KH_retype_pass" class="form-control" type="password" required>
-                    </div>
-                    <div class="text-center">
-                        <input type="submit" class="btn btn-primary btn-block mb-4" value="đăng kí"></input>
-                    </div>
-                </form>
+                </div>
             </div>
-        </div>
+            <div class="text-center d-flex justify-content-center mt-3">
+                <a class="text-reset border btn w-25" id="add_branch" style="padding-top: 12px;">thêm địa chỉ</a>
+                <input type="number" name="num_branch" hidden id="num_branch" value=0>
+            </div>
+            <div class="form-group">
+                <label class="form-label">email</label>
+                <input class="form-control" name="email" required>
+            </div>
+            <div class="form-group row">
+                <div class="col-6">
+                    <label class="form-label">mật khẩu</label>
+                    <input class="form-control" type="password" required>
+                </div>
+                <div class="col-6">
+                    <label class="form-label">nhập lại mật khẩu</label>
+                    <input class="form-control" type="password" required>
+                </div>
+            </div>
+        </form>
     </div>
-    <div>
-        {% include 'snippets/footer.html' %}
-    </div>
+
     <script src="{% static 'js/signup.js'%}"></script>
+    {% include 'snippets/footer.html' %}
 </body>
 </html>

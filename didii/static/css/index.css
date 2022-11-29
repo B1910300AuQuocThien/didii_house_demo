@@ -34,9 +34,105 @@ body {
     background-color: #f7f7f7;
     position: sticky;
     top: 0px;
+    z-index: 0;
+}
+
+/* main */
+
+
+/* content */
+.post-interact {
+    margin-top: 20px;
+}
+
+.post-interact div {
+    display: flex;
+    justify-content: space-around;
+}
+
+/* post image */
+
+.slideshow-container {
+    position: relative;
+}
+
+.mySlides {
+    display: none;
+}
+
+.prev,
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    text-decoration: none;
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover,
+.next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.numbertext {
+    color: #000000;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+    font-size: large;
+}
+
+.active,
+
+
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {
+        opacity: .4
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+
+.like-btn,
+.comment,
+.book {
+    margin: 10px 0;
+    height: 30px;
+    text-decoration: none;
+    border: 1px solid black;
+    border-radius: 5px;
+    text-align: center;
 }
 
 /* right side */
+
+.right_side {
+    position: sticky;
+    top: 70px;
+    left: 0px;
+}
 
 .timeline {
     position: relative;
@@ -146,4 +242,18 @@ body {
 
 .schedule-message {
     width: 180px;
+}
+
+/* left side */
+.left_side {
+    position: sticky;
+    top: 70px;
+    z-index: 3;
+}
+
+/* footer */
+footer {
+    position: sticky;
+    top: 0px;
+    z-index: 0;
 }
