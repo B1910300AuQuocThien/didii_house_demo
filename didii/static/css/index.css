@@ -34,7 +34,7 @@ body {
     background-color: #f7f7f7;
     position: sticky;
     top: 0px;
-    z-index: 0;
+    z-index: 3;
 }
 
 /* main */

@@ -7,7 +7,7 @@ from pkg_resources import to_filename
 
 # Create your models here.
 class account(models.Model): 
-    username = models.CharField(max_length=10, primary_key=True)
+    username = models.CharField(max_length=50, primary_key=True)
     password = models.CharField(max_length=10)
     id_gr = models.ForeignKey('groupuser', on_delete=models.CASCADE)
     def get_id(self):
@@ -27,16 +27,16 @@ class groupuser(models.Model):
         return self.id_gr
 class address(models.Model):
     id_add = models.CharField(max_length=10, primary_key=True)
-    tinh_tp = models.CharField(max_length=20)
-    quan_huyen = models.CharField(max_length=20)
-    phuong_xa = models.CharField(max_length=20)
-    duong = models.CharField(max_length=20)
+    city = models.CharField(max_length=20)
+    district = models.CharField(max_length=20)
+    ward = models.CharField(max_length=20)
+    street = models.CharField(max_length=20)
     
     def get_id(self):
         return self.id_add
     
     def get_address(self):
-        return self.duong + ", " + self.phuong_xa + ", " + self.quan_huyen + ", " + self.tinh_tp
+        return self.street + ", " + self.ward + ", " + self.district + ", " + self.city
     
 class customer(models.Model):
     id_cus = models.AutoField(primary_key=True)
@@ -109,6 +109,11 @@ class branch(models.Model):
     id_landlord = models.ForeignKey(landlord, on_delete=models.CASCADE)
     id_add = models.ForeignKey(address, on_delete=models.CASCADE, to_field='id_add')
     
+    def get_id_landlord(self):
+        return self.id_landlord
+
+    def get_id_add(self):
+        return self.id_add
     
 class post(models.Model):
     id_post = models.AutoField(primary_key=True)
@@ -119,7 +124,8 @@ class post(models.Model):
     img = models.ImageField(upload_to='images', default="")
     id_add = models.ForeignKey(address, on_delete=models.CASCADE, to_field='id_add')
     id_interact = models.ForeignKey("interact", on_delete=models.CASCADE, to_field='id_interact')
-    id_cmt = models.ForeignKey("comment", on_delete=models.CASCADE, to_field='id_cmt')
+    # id_cmt = models.ForeignKey("comment", on_delete=models.CASCADE, to_field='id_cmt')
+    # id_cmt = models.CharField(max_length=10)
     vote = models.FloatField()
     cost = models.FloatField()
     status = models.BooleanField()
@@ -143,7 +149,8 @@ class post(models.Model):
         return self.status
     
 class comment(models.Model):
-    id_cmt = models.AutoField(primary_key=True)
+    # id_cmt = models.AutoField(primary_key=True)
+    # id_cmt = models.ForeignKey(post, on_delete=models.CASCADE)
     id_post = models.ForeignKey(post, on_delete=models.CASCADE)
     email = models.ForeignKey(customer, on_delete=models.CASCADE)
     date = models.DateField()

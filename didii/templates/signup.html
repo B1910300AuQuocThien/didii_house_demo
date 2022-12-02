@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% include "snippets/link.html" %}
     <title>Document</title>
-    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <link rel="stylesheet" href="{% static 'signup.css' %}">
 </head>
 <body>
     {% include 'snippets/header.html' %}
@@ -41,9 +41,9 @@
             <hr>
             <div class="form-group w-25">
                 <label class="form-label">loai nguoi dung</label>
-                <select class="form-select">
-                    <option value="CT">chủ trọ</option>
+                <select name="groupuser" id="groupuser" class="form-select">
                     <option value="KH">người thuê trọ</option>
+                    <option value="CT">chủ trọ</option>
                 </select>
             </div>
             <hr>
@@ -72,12 +72,14 @@
                             <input name="street" class="form-control" required>
                         </div>
                     </div>
+                    
                 </div>
             </div>
             <div class="text-center d-flex justify-content-center mt-3">
-                <a class="text-reset border btn w-25" id="add_branch" style="padding-top: 12px;">thêm địa chỉ</a>
+                <input class="text-reset border btn w-25" id="add_branch" value="thêm địa chỉ" disabled></input>
                 <input type="number" name="num_branch" hidden id="num_branch" value=0>
             </div>
+            <hr>
             <div class="form-group">
                 <label class="form-label">email</label>
                 <input class="form-control" name="email" required>
@@ -85,17 +87,20 @@
             <div class="form-group row">
                 <div class="col-6">
                     <label class="form-label">mật khẩu</label>
-                    <input class="form-control" type="password" required>
+                    <input class="form-control" name="password" type="password" required>
                 </div>
                 <div class="col-6">
                     <label class="form-label">nhập lại mật khẩu</label>
                     <input class="form-control" type="password" required>
                 </div>
             </div>
+            <div class="form-group d-flex justify-content-center">
+                <input class="form-control mt-4 w-25" type="submit" value="đăng kí">
+            </div>
         </form>
     </div>
 
-    <script src="{% static 'js/signup.js'%}"></script>
+    <script src="{% static 'signup.js' %}"></script>
     {% include 'snippets/footer.html' %}
 </body>
 </html>
