@@ -65,6 +65,7 @@ class customer(models.Model):
     
     def get_id_add(self):
         return self.id_add
+    
 class landlord(models.Model):
     id_landlord = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
@@ -117,11 +118,11 @@ class branch(models.Model):
     
 class post(models.Model):
     id_post = models.AutoField(primary_key=True)
-    id_landlord = models.ForeignKey(landlord, on_delete=models.CASCADE)
+    id_landlord = models.ForeignKey(landlord, on_delete=models.DO_NOTHING)
     date = models.DateField()
     title = models.CharField(max_length=50)
     content = models.CharField(max_length=250)
-    img = models.ImageField(upload_to='images', default="")
+    img = models.ImageField(upload_to='images/', default="")
     id_add = models.ForeignKey(address, on_delete=models.CASCADE, to_field='id_add')
     id_interact = models.ForeignKey("interact", on_delete=models.CASCADE, to_field='id_interact')
     # id_cmt = models.ForeignKey("comment", on_delete=models.CASCADE, to_field='id_cmt')
@@ -147,6 +148,12 @@ class post(models.Model):
     
     def get_status(self):
         return self.status
+    
+    def get_id_add(self):
+        return self.id_add
+    
+    def get_id_interact(self):
+        return self.id_interact
     
 class comment(models.Model):
     # id_cmt = models.AutoField(primary_key=True)

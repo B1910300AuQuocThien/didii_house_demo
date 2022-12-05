@@ -193,7 +193,6 @@ body {
     left: -16px;
 }
 
-/* The actual content */
 .content {
     padding: 10px 10px;
     background-color: rgb(255, 255, 255);
@@ -248,8 +247,13 @@ body {
 .left_side {
     position: sticky;
     top: 70px;
-    z-index: 3;
+    z-index: 2;
 }
+
+
+/* post */
+
+
 
 /* footer */
 footer {

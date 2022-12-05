@@ -1,1 +1,1 @@
-SELECT * FROM django_session
+SELECT * FROM didii_address, didii_branch, didii_landlord WHERE did

@@ -13,10 +13,9 @@
     {% include './snippets/header.html' with message=message%}
     <div class="row mx-2 main">
       {% include './snippets/left_side.html' with name=name text=text %} 
-      {% include './snippets/content.html' with loop=loop %} 
+      {%include './snippets/content.html' with posts=posts %} 
       {% include './snippets/right_side.html' %}
     </div>
     {% include "./snippets/footer.html" %}
-    
   </body>
 </html>
