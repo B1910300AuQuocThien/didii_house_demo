@@ -14,7 +14,7 @@
     <div class="row mx-2 main">
       {% include './snippets/left_side.html' with name=name text=text %} 
       {%include './snippets/content.html' with posts=posts %} 
-      {% include './snippets/right_side.html' %}
+      {% include './snippets/right_side.html' with calendars=calendars %}
     </div>
     {% include "./snippets/footer.html" %}
   </body>

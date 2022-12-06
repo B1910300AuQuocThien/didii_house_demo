@@ -189,7 +189,8 @@ class interact(models.Model):
 class schedule(models.Model):
     id_schedule = models.CharField(max_length=10, primary_key=True)
     id_post = models.ForeignKey(post, on_delete=models.CASCADE, to_field="id_post")
-    email = models.ForeignKey(landlord, on_delete=models.CASCADE)
+    email_ll = models.ForeignKey(landlord, on_delete=models.CASCADE)
+    email_cus = models.ForeignKey(customer, on_delete=models.CASCADE)
     appointment_date = models.DateField()
     booking_date = models.DateField()
     

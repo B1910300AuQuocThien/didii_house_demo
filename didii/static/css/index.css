@@ -153,7 +153,6 @@ body {
 .container_right_side {
     position: relative;
     background-color: inherit;
-    width: 50%;
 }
 
 .container_right_side::after {
@@ -173,6 +172,7 @@ body {
 
 .right {
     left: 10px;
+    margin-bottom: 10px;
 }
 
 
@@ -183,22 +183,22 @@ body {
     top: 5px;
     width: 0;
     z-index: 1;
-    left: -4px;
+    left: 8px;
     border: medium solid rgb(255, 255, 255);
     border-width: 10px 10px 10px 0;
     border-color: transparent rgb(0, 0, 0) transparent transparent;
 }
 
 .right::after {
-    left: -16px;
+    left: -4px;
 }
 
 .content {
-    padding: 10px 10px;
+    /* padding: 10px 10px; */
     background-color: rgb(255, 255, 255);
     position: relative;
     border-radius: 6px;
-    left: 6px;
+    left: 18px;
     border: 1px solid black;
     width: 100px;
     height: 50px;
@@ -240,6 +240,8 @@ body {
 }
 
 .schedule-message {
+    position: relative;
+    left: 25px;
     width: 180px;
 }
 

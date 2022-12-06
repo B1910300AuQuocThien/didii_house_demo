@@ -1,0 +1,21 @@
+{% load static %}
+{% include 'snippets/link.html' %}
+<body>
+    {% include 'snippets/header.html' with message=message%}
+    {% include 'snippets/message.html' %}
+        <div class="schedule_content border w-25 mx-auto mt-5 rounded ">
+            
+            <form action="" method='post' class="p-4">
+                <div class="form-group">
+                    <label class="form-label">ngày hẹn</label>
+                    <input class="form-control" name="age" required>
+                </div>
+                <div class="form-group d-flex justify-content-center row mt-3">
+                    <div class="text-center col-6">
+                        <input type="submit" class="btn btn-primary btn-block mb-4" value="thêm lịch"></input>
+                    </div>
+                </div>
+            </form>
+        </div>
+    <script src="{% static 'signup.js' %}"></script>
+</body>

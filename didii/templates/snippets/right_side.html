@@ -6,20 +6,35 @@
         </div>
         <hr>
         <div class="row">
-            <div class="col-5">
+            <div class="">
                 <div class="timeline">
-                    <div class="container_right_side right">
-                        <div class="content mb-2">
-                            7:00 - 9:00
-                        </div>
-                    </div>
+                    {% comment %} {% if  request.session.id_gr  == 'CT' %} {% endcomment %}
+                        {% for calendar in calendars %}
+                            <div class="row container_right_side right">
+                                <div class="col-6 content ">
+                                    {{ calendar.appointment_date }}
+                                </div>
+                                <div class="col-6 schedule-message border rounded">
+                                    {{ calendar.id_post.get_id_add.get_address }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% comment %} {% endif %} {% endcomment %}
+                    {% comment %} {% if request.session.id_gr == 'KH' %}
+                        {% for calendar in calendars %}
+                            <div class="row container_right_side right">
+                                <div class="col-6 content ">
+                                    7:00 - 9:00
+                                </div>
+                                <div class="col-6 schedule-message border rounded">
+                                    thien
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %} {% endcomment %}
                 </div>
             </div>
-            <div class="col-6 border mb-2 rounded schedule-message">
-                <span>
-                
-                </span>
-            </div>
+            
         </div>
     </div>
 </div>

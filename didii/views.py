@@ -29,20 +29,37 @@ def createPK(table_name, key):
 
 def renderIndex(request):
     posts = post.objects.all()
-    sessions = Session.objects.all()
-    print(sessions is not None)
+    sessions = Session.objects.all().first()
+    calendars = ''
     if sessions is not None:
+        if request.session['id_gr'] == 'CT':
+            print(request.session['email'])
+            calendars = schedule.objects.filter(email_ll = landlord.objects.get(email = request.session['email']))
+        
+        if request.session['id_gr'] == 'KH':
+            calendars = schedule.objects.filter(email_cus = customer.objects.get(email = request.session['email']))
+        
+        return render(request, 'index.html', {'url': 'logout/', 'text': "Đăng xuất", 'posts': posts, 'calendars': calendars})
+    if sessions is None:
         return render(request, 'index.html', {'url': 'login/', 'text': "Đăng nhập", 'posts': posts})
-    else:
-        return render(request, 'index.html', {'url': 'logout/', 'text': "Đăng xuất", 'posts': posts})
 
 
 def renderSignup(request):
     return HttpResponse(loader.get_template("signup.html").render())
-    # return render(request, 'signup.html')gettinh
 
 
 def renderPersonal(request):
+    user = account.objects.get(username = request.session['email'])
+    # print(user.get_id_gr().get_id())
+    if user.get_id_gr().get_id() == 'CT':
+        user = landlord.objects.get(email = user.username)
+    else:
+        user.get_id_gr().get_id() == 'KH'
+        user = customer.objects.get(email = user.username)
+    
+    request.session['name'] = user.get_name()
+    request.session['email'] = user.get_email().get_username()
+    request.session['address'] = user.get_id_add().get_address()
     request.session['edit_info'] = 'edit_info/'
     request.session['edit_profile'] = 'edit_profile/'
     request.session['create_post'] = 'create_post/'
@@ -50,7 +67,48 @@ def renderPersonal(request):
 
 
 @csrf_exempt
-def checklogin(request, action):
+def schedules(request, id):
+    if Session.objects.all().first() is not None :
+        
+        if request.session['id_gr'] == 'CT':
+            messages.error(request, "chỉ khách hàng mới có thể đặt lịch")
+            return render(request, 'snippets/schedule.html')
+        
+        if request.method == 'POST':
+            if schedule.objects.filter(email_cus = customer.objects.get(email = request.session['email']),
+                                       id_post = id):
+                messages.error(request, "bạn đã đặt lịch trước đó")
+                return render(request, 'snippets/schedule.html')
+            else:
+                appointment = request.POST['age']
+                appointment = appointment.split(" / ")
+                appointment = list(reversed(appointment))
+                appointment = "-".join(appointment)
+                
+                posts = post.objects.get(id_post = id)
+                email_ll = posts.id_landlord
+                
+                book_date = date.today()
+                book_date = str(book_date).split('-')
+                book_date = '-'.join(book_date)
+                
+                calendar = schedule(id_schedule = createPK(schedule, "sche"),
+                                    id_post = post.objects.get(id_post = id),
+                                    email_ll = email_ll,
+                                    email_cus = customer.objects.get(email = request.session['email']),
+                                    appointment_date = appointment,
+                                    booking_date = book_date)
+
+                calendar.save()
+                return HttpResponseRedirect('http://127.0.0.1:8000/didii/index/')
+        else:
+            return render(request, 'snippets/schedule.html')
+    else:
+        return HttpResponseRedirect('http://127.0.0.1:8000/didii/index/login/')
+        
+    
+@csrf_exempt
+def checklogin(request, *args):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -58,28 +116,28 @@ def checklogin(request, action):
         if acc.first() is None:
             messages.error(request, "tai khoan khong ton tai")
             # url = render(request, "login.html")
-            return HttpResponseRedirect(reverse('login'))
+            return HttpResponseRedirect('http://127.0.0.1:8000/didii/index/login/')
         else:
-            # print(acc.first().get_id_gr().get_id())
+            print(acc.first().get_id_gr().get_id())
             if acc.first().get_id_gr().get_id() == "CT":
                 user = landlord.objects.filter(email=username)
             else:
                 user = customer.objects.filter(email=username)
-
+        
+        request.session['id_gr'] = acc.first().get_id_gr().get_id()
         request.session['name'] = user.first().get_name()
         request.session['email'] = user.first().get_email().get_username()
         request.session['address'] = user.first().get_id_add().get_address()
         request.session['url'] = "logout/"
         request.session['text'] = "Đăng xuất"
-        posts =  post.objects.all()
-        return render(request, 'index.html', {'url': 'logout/', 'text': "Đăng xuất", 'posts': posts})
+        return HttpResponseRedirect('http://127.0.0.1:8000/didii/index/')
     else:
-        return HttpResponse(loader.get_template('login.html').render())
+        return render(request, 'login.html')
     
 
 def logout(request):
     Session.objects.all().delete()
-    return HttpResponseRedirect(reverse(checklogin))
+    return HttpResponseRedirect('http://127.0.0.1:8000/didii/index/login/')
 
 
 @csrf_exempt
@@ -97,9 +155,7 @@ def signup(request):
         num_branch = request.POST['num_branch']
         email = request.POST['email']
         upass = request.POST.get('password')
-        # print(upass)
-        # print(add_city[0)
-        # return HttpResponse("index.html")
+        
         acc = account.objects.filter(username=email).first()
 
         age = age.split(" / ")
@@ -128,8 +184,9 @@ def signup(request):
                             id_add=address.objects.get(id_add=add.get_id()))
                         
             info.save()
+            request.session['email'] = email
             request.session['name'] = name
-            return render(request, "index.html", {'url': "logout/", 'text': "Đăng xuất"})
+            return HttpResponseRedirect(reverse(renderIndex))
         
         elif typeuser == 'CT' and acc is None:
             acc = account(username=email,
@@ -143,7 +200,6 @@ def signup(request):
                         ward=add_ward[0],
                         street=add_street[0])
             add.save()
-            # print(add)
 
             info = landlord(name=name,
                             age=age,
@@ -167,34 +223,34 @@ def signup(request):
                     branch_info = branch(id_landlord=landlord.objects.get(id_landlord=info.get_id()),
                                         id_add=address.objects.get(id_add=add_branch.get_id()))
                     branch_info.save()
-
             request.session['name'] = name
             request.session['email'] = email
-            return render(request, "index.html", {'url': "logout/", 'text': "Đăng xuất"})
+            return HttpResponseRedirect(reverse(renderIndex))
         else:
-            return HttpResponseRedirect('/didii/renderLogin/signup/')
+            return HttpResponseRedirect('/didii/signup/')
     else:
         return HttpResponse(loader.get_template("signup.html").render())
     
 
-
 def edit(request, action):
-    request.session[action] = '#'
+    request.session[action] = ''
     add = ''
     id = ''
-    if action == 'create_post':
+    if action == 'create_post' and request.session['id_gr'] == 'CT':
         id = branch.objects.filter(id_landlord = landlord.objects.get(email = request.session['email']))
         add = []
         for i in id:
             add.append(i.get_id_add().get_address())
-        
-        
-    return render(request, 'personal.html', {'action': action, 'ids':id, 'adds': add})
+        return render(request, 'personal.html', {'action': action, 'ids':id, 'adds': add})
+    if action == 'edit_info':
+        return render(request, 'personal.html', {'action': action, 'ids':id, 'adds': add})
+    
+    return HttpResponseRedirect('http://127.0.0.1:8000/didii/index/personal/')
+
 
 def cancel(request, action):
     print(type(request.META.get('HTTP_REFERER')))
-    return HttpResponseRedirect('http://127.0.0.1:8000/didii/index/login/personal/')    
-    # return HttpResponse(loader.get_template('personal.html').render())
+    return HttpResponseRedirect('http://127.0.0.1:8000/didii/index/personal/')    
 
 
 @csrf_exempt
@@ -258,50 +314,57 @@ def updata_info(request):
     return HttpResponseRedirect('http://127.0.0.1:8000/didii/index/login/personal/')    
     
         
-        
 @csrf_exempt
 def update_post(request):
-    post_title = request.POST['post_title']
-    post_content = request.POST['post_content']
-    post_img = request.FILES['post_img']
-    post_cost = request.POST['post_cost']
-    post_add = request.POST['post_id_add']
+    if request.session['id_gr'] == 'CT':
+        post_title = request.POST['post_title']
+        post_content = request.POST['post_content']
+        post_img = request.FILES['post_img']
+        post_cost = request.POST['post_cost']
+        post_add = request.POST.get('post_id_add')
+        post_date = date.today()
+        post_date = str(post_date).split('-')
+        post_date = '-'.join(post_date)
+        
+        if post_add is None:
+            post_add = landlord.objects.get(email = request.session['email']).get_id_add().get_id()
+        
+        feel = interact(id_interact = createPK(interact, 'inter'), 
+                        love_count = 0,
+                        cmt_count = 0)
+        feel.save()
+        post_detail = post(id_landlord = landlord.objects.get(email = request.session['email']),
+                        date = post_date,
+                        title = post_title,
+                        content = post_content,
+                        img = post_img,
+                        id_add = address.objects.get(id_add = post_add),
+                        id_interact = interact.objects.get(id_interact = feel.get_id()),
+                        vote = 0,
+                        cost = post_cost,
+                        status = True)
+        post_detail.save()
+        messages.success(request, "đăng bài thành công")
+        return HttpResponseRedirect('http://127.0.0.1:8000/didii/index/personal/')
+    else:
+        return HttpResponseRedirect('http://127.0.0.1:8000/didii/index/personal/')
     
-    post_date = date.today()
-    post_date = str(post_date).split('-')
-    post_date = '-'.join(post_date)
-    
-    print(type(post_add))
-    
-    feel = interact(id_interact = createPK(interact, 'inter'), 
-                    love_count = 0,
-                    cmt_count = 0)
-    feel.save()
-    post_detail = post(id_landlord = landlord.objects.get(email = request.session['email']),
-                       date = post_date,
-                       title = post_title,
-                       content = post_content,
-                       img = post_img,
-                       id_add = address.objects.get(id_add = post_add),
-                       id_interact = interact.objects.get(id_interact = feel.get_id()),
-                       vote = 0,
-                       cost = post_cost,
-                       status = True)
-    post_detail.save()
-    
-    # print(request.GET)
-    # return HttpResponseRedirect(reverse('personal'))
-    return HttpResponseRedirect('http://127.0.0.1:8000/didii/index/login/personal/')    
-    
-
 
 def heart(request, id):
-    id = post.objects.get(id_post = id)
-    heart = interact.objects.get(id_interact = id.get_id_interact().get_id())
-    heart.love_count += 1
-    # heart.save()
-    posts =  post.objects.all()
-    return render(request, 'index.html', {'url': 'logout/', 'text': "Đăng xuất", 'posts': posts})
+    if Session.objects.all().first() is not None:
+        id = post.objects.get(id_post = id)
+        heart = interact.objects.get(id_interact = id.get_id_interact().get_id())
+        heart.love_count += 1
+        # heart.save()
+        # posts =  post.objects.all()
+        return HttpResponseRedirect('http://127.0.0.1:8000/didii/index/')
+    else:
+        return HttpResponseRedirect('http://127.0.0.1:8000/didii/index/login/')
+   
 
-def back(request):
-    return HttpResponseRedirect(reverse('index'))
+def back(request, id):
+    if Session.objects.all().first() is not None:
+        return HttpResponseRedirect(reverse('index'))
+    else:
+        return HttpResponseRedirect(reverse(checklogin))
+        
