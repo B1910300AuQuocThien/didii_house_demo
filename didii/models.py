@@ -125,8 +125,6 @@ class post(models.Model):
     img = models.ImageField(upload_to='images/', default="")
     id_add = models.ForeignKey(address, on_delete=models.CASCADE, to_field='id_add')
     id_interact = models.ForeignKey("interact", on_delete=models.CASCADE, to_field='id_interact')
-    # id_cmt = models.ForeignKey("comment", on_delete=models.CASCADE, to_field='id_cmt')
-    # id_cmt = models.CharField(max_length=10)
     vote = models.FloatField()
     cost = models.FloatField()
     status = models.BooleanField()
@@ -173,7 +171,7 @@ class comment(models.Model):
         return self.cmt
 class interact(models.Model):
     id_interact = models.CharField(max_length=10, primary_key=True)
-    # id_interact = models.ForeignKey(post, on_delete=models.CASCADE)
+    
     love_count = models.IntegerField()
     cmt_count = models.IntegerField()
     

@@ -50,12 +50,22 @@ def renderSignup(request):
 
 def renderPersonal(request):
     user = account.objects.get(username = request.session['email'])
-    # print(user.get_id_gr().get_id())
+    posts = ''
+    if request.session['id_gr'] == 'CT':
+        print(request.session['email'])
+        calendars = schedule.objects.filter(email_ll = landlord.objects.get(email = request.session['email']))
+        posts = post.objects.filter(id_landlord = landlord.objects.get(email = request.session['email']))
+
+    if request.session['id_gr'] == 'KH':
+        calendars = schedule.objects.filter(email_cus = customer.objects.get(email = request.session['email']))
+        
+    
     if user.get_id_gr().get_id() == 'CT':
         user = landlord.objects.get(email = user.username)
     else:
         user.get_id_gr().get_id() == 'KH'
         user = customer.objects.get(email = user.username)
+    
     
     request.session['name'] = user.get_name()
     request.session['email'] = user.get_email().get_username()
@@ -63,7 +73,8 @@ def renderPersonal(request):
     request.session['edit_info'] = 'edit_info/'
     request.session['edit_profile'] = 'edit_profile/'
     request.session['create_post'] = 'create_post/'
-    return render(request, 'personal.html')
+    print(posts)
+    return render(request, 'personal.html', {'calendars': calendars, 'posts': posts})
 
 
 @csrf_exempt
@@ -184,6 +195,7 @@ def signup(request):
                             id_add=address.objects.get(id_add=add.get_id()))
                         
             info.save()
+            request.session['id_gr'] = 'KH'
             request.session['email'] = email
             request.session['name'] = name
             return HttpResponseRedirect(reverse(renderIndex))
@@ -223,13 +235,15 @@ def signup(request):
                     branch_info = branch(id_landlord=landlord.objects.get(id_landlord=info.get_id()),
                                         id_add=address.objects.get(id_add=add_branch.get_id()))
                     branch_info.save()
+            request.session['id_gr'] = 'CT'
             request.session['name'] = name
             request.session['email'] = email
             return HttpResponseRedirect(reverse(renderIndex))
         else:
-            return HttpResponseRedirect('/didii/signup/')
+            messages.error(request, 'email đã tồn tại')
+            return HttpResponseRedirect(reverse(signup))
     else:
-        return HttpResponse(loader.get_template("signup.html").render())
+        return render(request, 'signup.html')
     
 
 def edit(request, action):
@@ -355,8 +369,7 @@ def heart(request, id):
         id = post.objects.get(id_post = id)
         heart = interact.objects.get(id_interact = id.get_id_interact().get_id())
         heart.love_count += 1
-        # heart.save()
-        # posts =  post.objects.all()
+        heart.save()
         return HttpResponseRedirect('http://127.0.0.1:8000/didii/index/')
     else:
         return HttpResponseRedirect('http://127.0.0.1:8000/didii/index/login/')
@@ -368,3 +381,8 @@ def back(request, id):
     else:
         return HttpResponseRedirect(reverse(checklogin))
         
+def delete_post(request, id):
+    del_post = post.objects.get(id_post = id)
+    del_post.delete()
+    messages.success(request, "xóa thành công")
+    return HttpResponseRedirect(reverse(renderPersonal  ))

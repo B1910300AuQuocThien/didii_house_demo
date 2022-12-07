@@ -3,7 +3,7 @@
 <body>
     {% include 'snippets/header.html' with message=message%}
     {% include 'snippets/message.html' %}
-        <div class="schedule_content border w-25 mx-auto mt-5 rounded ">
+        <div class="schedule_content border w-25 mx-auto mt-5 rounded " style="height: 250px">
             
             <form action="" method='post' class="p-4">
                 <div class="form-group">
@@ -17,5 +17,6 @@
                 </div>
             </form>
         </div>
+    {% include 'snippets/footer.html' %}
     <script src="{% static 'signup.js' %}"></script>
 </body>

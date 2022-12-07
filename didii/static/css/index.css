@@ -259,7 +259,7 @@ body {
 
 /* footer */
 footer {
-    position: sticky;
-    top: 0px;
+    position: relative;
+    bottom: -100px;
     z-index: 0;
 }

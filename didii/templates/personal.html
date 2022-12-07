@@ -20,7 +20,7 @@
     {% if action == 'edit_profile' %}
         {% include './snippets/edit_profile.html' %}
     {% endif %}
-    <div class="row mx-2  ">
+    <div class="row mx-2" style="height: 48vh" >
         <div class="col-9">
             <div class="row py-3 border-bottom ">
                 <div class="col-3 d-flex justify-content-end">
@@ -44,8 +44,10 @@
                 </div>
             </div>
             {% include 'snippets/message.html' %}
+            {% include 'snippets/manage_post.html' %}
+            
         </div>
-        {% include './snippets/right_side.html' %}
+        {% include './snippets/right_side.html' with calendars=calendars%}
     </div>
     {% include "./snippets/footer.html" %}
     <script src="{% static 'js/personal.js' %}"></script>

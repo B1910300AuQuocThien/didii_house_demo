@@ -21,10 +21,6 @@ urlpatterns = [
     
     path('index/personal/edit_info/update_info/', views.updata_info, name="update_info"),
     path('index/personal/create_post/update_post/', views.update_post, name="update_post"),
+    re_path(r'index/personal/delete=(?P<id>[0-9][0-9])/$', views.delete_post, name="delete_post"),
     
-    path('index/signup/signup/personal/', views.renderPersonal, name="personal"),
-    re_path(r'index/signup/signup/personal/(?P<action>edit_info|edit_profile|create_post)/$', views.edit, name="edit"),
-    re_path(r'index/signup/signup/personal/(?P<action>edit_info|edit_profile|create_post)/cancel/$', views.cancel, name="cancel"),
-    
-    path('index/signup/signup/logout/', views.logout, name="logout"),
 ]
